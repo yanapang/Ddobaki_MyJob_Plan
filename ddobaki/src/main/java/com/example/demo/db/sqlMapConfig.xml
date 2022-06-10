@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<properties resource="com/example/demo/db/db.properties"/>
+<typeAliases>
+	<typeAlias type="com.example.demo.vo.Place_imageVO" alias="place_imageVO"/>
+	<typeAlias type="com.example.demo.vo.RoomVO" alias="roomVO"/>
+	<typeAlias type="com.example.demo.vo.User_reservationVO" alias="user_reservationVO"/>
+</typeAliases>
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+    <mapper resource="com/example/demo/db/Place_imageMapper.xml"/>
+    <mapper resource="com/example/demo/db/RoomMapper.xml"/>
+    <mapper resource="com/example/demo/db/User_reservationMapper.xml"/>
+  </mappers>
+</configuration>
