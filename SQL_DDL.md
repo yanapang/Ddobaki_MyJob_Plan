@@ -1,6 +1,7 @@
 ## sql 데이터 정의어
 
 ```sql
+
 CREATE TABLE BOARD (
        POST_NUM             NUMBER NOT NULL,
        BOARD_NUM            NUMBER NOT NULL,
@@ -179,12 +180,10 @@ CREATE TABLE USER_RESERVATION (
        R_PRICE              NUMBER NOT NULL,
        USER_NUM             NUMBER NOT NULL,
        ROOM_NUM             NUMBER NOT NULL,
-       PLACE_NUM            NUMBER NULL
+       PLACE_NUM            NUMBER NULL,
+       PRIMARY KEY(R_NUM,USER_NUM)
 );
 
-
-ALTER TABLE USER_RESERVATION
-       ADD  ( PRIMARY KEY (USER_NUM, R_NUM) ) ;
 
 
 ALTER TABLE BOARD
