@@ -1,5 +1,8 @@
 package com.example.demo.vo;
 
+import lombok.Data;
+
+@Data
 public class PlaceVO {
 	private int place_num;
 	private int region_num;
