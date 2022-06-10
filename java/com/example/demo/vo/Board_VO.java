@@ -2,6 +2,9 @@ package com.example.demo.vo;
 
 import java.util.Date;
 
+import lombok.Data;
+
+@Data
 public class Board_VO {
 	private int post_num;
 	private int user_num;
