@@ -8,6 +8,8 @@
 	<typeAlias type="com.example.demo.vo.Place_imageVO" alias="place_imageVO"/>
 	<typeAlias type="com.example.demo.vo.RoomVO" alias="roomVO"/>
 	<typeAlias type="com.example.demo.vo.User_reservationVO" alias="user_reservationVO"/>
+	<typeAlias type="com.example.demo.vo.User_infoVO" alias="user_infoVO"/>
+	<typeAlias type="com.example.demo.vo.DogVO" alias="dogVO"/>
 </typeAliases>
   <environments default="development">
     <environment id="development">
@@ -24,5 +26,6 @@
     <mapper resource="com/example/demo/db/Place_imageMapper.xml"/>
     <mapper resource="com/example/demo/db/RoomMapper.xml"/>
     <mapper resource="com/example/demo/db/User_reservationMapper.xml"/>
+    <mapper resource="com/example/demo/db/User_infoMapper.xml"/>
   </mappers>
 </configuration>
