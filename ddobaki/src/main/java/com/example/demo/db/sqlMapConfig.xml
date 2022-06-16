@@ -5,11 +5,11 @@
 <configuration>
 <properties resource="com/example/demo/db/db.properties"/>
 <typeAliases>
-	<typeAlias type="com.example.demo.vo.Place_imageVO" alias="place_imageVO"/>
-	<typeAlias type="com.example.demo.vo.RoomVO" alias="roomVO"/>
-	<typeAlias type="com.example.demo.vo.User_reservationVO" alias="user_reservationVO"/>
-	<typeAlias type="com.example.demo.vo.User_infoVO" alias="user_infoVO"/>
+	<typeAlias type="com.example.demo.vo.DibsVO" alias="dibsVO"/>
 	<typeAlias type="com.example.demo.vo.DogVO" alias="dogVO"/>
+	<typeAlias type="com.example.demo.vo.PaymentVO" alias="paymentVO"/>
+	<typeAlias type="com.example.demo.vo.ReservationVO" alias="reservationVO"/>
+	<typeAlias type="com.example.demo.vo.UserInfoVO" alias="userInfoVO"/>
 </typeAliases>
   <environments default="development">
     <environment id="development">
@@ -23,9 +23,10 @@
     </environment>
   </environments>
   <mappers>
-    <mapper resource="com/example/demo/db/Place_imageMapper.xml"/>
-    <mapper resource="com/example/demo/db/RoomMapper.xml"/>
-    <mapper resource="com/example/demo/db/User_reservationMapper.xml"/>
-    <mapper resource="com/example/demo/db/User_infoMapper.xml"/>
+    <mapper resource="com/example/demo/db/DibsMapper.xml"/>
+    <mapper resource="com/example/demo/db/DogMapper.xml"/>
+    <mapper resource="com/example/demo/db/PaymentMapper.xml"/>
+    <mapper resource="com/example/demo/db/ReservationMapper.xml"/>
+    <mapper resource="com/example/demo/db/UserInfoMapper.xml"/>
   </mappers>
 </configuration>

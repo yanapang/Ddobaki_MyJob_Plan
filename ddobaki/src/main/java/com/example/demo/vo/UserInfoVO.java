@@ -3,7 +3,7 @@ package com.example.demo.vo;
 import lombok.Data;
 
 @Data
-public class User_infoVO {
+public class UserInfoVO {
 	 private int USER_NUM;
 	 private String USER_ID;                     
 	 private String USER_PWD;                       

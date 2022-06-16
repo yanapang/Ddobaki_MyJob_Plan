@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dog">
+
+	<!-- 강아지 등록 -->
+	<insert id="insert" parameterType="dogVO">
+	 insert into dog(dog_num, user_num, dog_name, dog_age, dog_gender, dog_desexed, dog_weight) values 
+	 (#{dog_num}, #{user_num}, #{dog_name}, #{dog_age}, #{dog_gender}, #{dog_desexed}, #{dog_weight})
+	</insert>
+	
+	<!-- pk반환 -->
+	<select id="getNextNum">
+		select nvl(max(dog_num), 0)+1 from dog
+	</select>
+	
+	<!-- 강아지 정보 보기 => 값 받을때 Map or List -->
+	 <select id="findByNum" resultType="dogVO">
+	 	select dog_name, dog_gender, dog_age, dog_weight,dog_desexed 
+	 	from dog d, user_info u
+	 	where d.user_num=u.user_num and u.user_num=#{user_num}
+	 </select>
+	 
+	<!-- 강아지 정보 수정 -->
+	<update id="update" parameterType="dogVO">
+		update dog set dog_name=#{dog_name}, dog_age=#{dog_age}, dog_gender=#{dog_gender}, 
+			dog_desexed=#{dog_desexed}, dog_weight=#{dog_weight} 
+			where dog_num = #{dog_num}
+	</update>
+	
+	<!-- 강아지 정보 삭제-->
+	<delete id="delete">
+		delete from dog where dog_num =#{dog_num}
+	</delete>
+
+</mapper>
+

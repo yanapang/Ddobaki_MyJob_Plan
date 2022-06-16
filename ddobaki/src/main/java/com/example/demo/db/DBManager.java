@@ -10,7 +10,7 @@ public class DBManager {
 	public static SqlSessionFactory sqlSessionFactory = null;
 	static {
 		try {
-			String resource = "org/mybatis/example/mybatis-config.xml";
+			String resource = "com/example/demo/db/sqlMapConfig.xml";
 			InputStream inputStream = Resources.getResourceAsStream(resource);
 			sqlSessionFactory =
 			  new SqlSessionFactoryBuilder().build(inputStream);

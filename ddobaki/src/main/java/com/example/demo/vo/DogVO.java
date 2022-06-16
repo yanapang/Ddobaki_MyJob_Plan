@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class DogVO {
+	 private int DOG_NUM; 
 	 private int USER_NUM;
-	 private int DOG_NUM;
 	 private String DOG_NAME;
 	 private int DOG_AGE;
 	 private int DOG_GENDER;
