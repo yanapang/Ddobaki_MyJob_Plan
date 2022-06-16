@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dibs">
+
+	<!-- 찜목록 -->
+	<select id="list" resultType="dibsVO">
+		select * from dibs where user_num=#{user_num} order by dib_num desc
+	</select>
+	
+	<!-- 해당찜번호만 반환 -->
+	<select id="getNum">
+		select dib_num from dibs where user_num=#{user_num} and place_num=#{place_num}
+	</select>
+	
+	<!-- pk반환 -->
+	<select id="getNextNum">
+		select nvl(max(dib_num), 0)+1 from dib
+	</select>
+	
+	<!-- 찜등록 -->
+	<insert id="insert" parameterType="dibsVO">
+		insert into dibs(dib_num, user_num, place_num) values(#{dib_num}, #{user_num}, #{place_num})
+	</insert>
+	
+	<!-- 찜취소 -->
+	<delete id="delete">
+		delete from dibs where dib_num=#{dib_num}
+	</delete>
+
+</mapper>
