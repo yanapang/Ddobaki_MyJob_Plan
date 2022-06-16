@@ -6,4 +6,7 @@
   <select id="findAll" resultType="place_imageVO">
     select * from place_image
   </select>
+    <select id="findByNum" resultType="place_imageVO">
+    select * from place_image where place_num = #{place_num}
+  </select>
 </mapper>
