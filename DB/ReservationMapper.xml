@@ -6,7 +6,7 @@
 
 	
 	<!-- 마이페이지에서 예약 모든리스트 findAll -->
-	<select id="list" resultType="reservationVO">
+	<select id="findAll" resultType="reservationVO">
 		select * from reservation where user_id=#{user_id}
 	</select>
 	
