@@ -18,7 +18,7 @@
 	<!-- 강아지 정보 보기 => 값 받을때 Map or List -->
 	 <select id="findByNum" resultType="dogVO">
 	 	select dog_name, dog_gender, dog_age, dog_weight,dog_desexed 
-	 	from dog d, user_info u
+	 	from dog d, userInfo u
 	 	where d.user_num=u.user_num and u.user_num=#{user_num}
 	 </select>
 	 
