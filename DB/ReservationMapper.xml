@@ -21,7 +21,7 @@
 	</select>
 	
 	<!-- 예약 할때 insert-->
-	<insert id="insert">
+	<insert id="insert" parameterType="reservationVO">
 		insert into reservation(reservation_num, user_num, place_num, room_num,
 				reservation_park, reservation_spa, reservation_meal_cnt, reservation_price,
 				reservation_checkin_date, reservation_checkout_date, reservation_people_cnt,
