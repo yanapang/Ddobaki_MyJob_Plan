@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.Id;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +17,13 @@ import lombok.Setter;
 @Setter
 public class UserInfoService {
 	@Autowired
-	private UserInfoDAO dao;
+	private UserInfoDAO user_dao;
 	
 	public List<UserInfo> findAll(){
-		return dao.findAll();
+		return user_dao.findAll();
+	}
+	
+	public Optional<UserInfo> getUser(int user_num) {
+		return user_dao.findById(user_num);
 	}
 }

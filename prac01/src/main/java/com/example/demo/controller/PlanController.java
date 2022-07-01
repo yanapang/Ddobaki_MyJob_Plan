@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -14,10 +15,12 @@ import com.example.demo.service.PlanService;
 import com.example.demo.service.UserInfoService;
 import com.example.demo.vo.Plan;
 
+import lombok.Getter;
 import lombok.Setter;
 
 @Controller
 @Setter
+@Getter
 public class PlanController {
 	// ----  service 객체 생성. ------
 	@Autowired
@@ -37,8 +40,8 @@ public class PlanController {
 	}
 	
 	@GetMapping("/insertPlan")
-	public void insert(Model model) {
-		model.addAttribute("user_list", userS.findAll());
+	public void insert(@PathVariable int user_num, Model model) {
+		model.addAttribute("user", userS.getUser(user_num));
 		model.addAttribute("place_list", placeS.findAll());
 		model.addAttribute("plan_list", planS.findAll());
 	}

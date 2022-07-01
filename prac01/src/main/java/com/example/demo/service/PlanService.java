@@ -15,13 +15,13 @@ import lombok.Setter;
 public class PlanService {
 
 	@Autowired
-	private PlanDAO dao;
+	private PlanDAO plan_dao;
 	
 	public List<Plan> findAll(){
-		return dao.findAll();
+		return plan_dao.findAll();
 	}
 	
 	public void save(Plan p) {
-		dao.save(p);
+		plan_dao.save(p);
 	}
 }
