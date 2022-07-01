@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import com.example.demo.service.PlaceService;
 import com.example.demo.service.PlanService;
 import com.example.demo.service.UserInfoService;
 import com.example.demo.vo.Plan;
+import com.example.demo.vo.UserInfo;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -39,11 +41,17 @@ public class PlanController {
 		return planS.findAll();
 	}
 	
-	@GetMapping("/insertPlan")
-	public void insert(@PathVariable int user_num, Model model) {
-		model.addAttribute("user", userS.getUser(user_num));
-		model.addAttribute("place_list", placeS.findAll());
-		model.addAttribute("plan_list", planS.findAll());
+//	@GetMapping("/insertPlan/{user_num}")
+//	public void insert(@PathVariable("user_num") int user_num, Model model) {
+//		model.addAttribute("user", userS.getUser(user_num));
+//		model.addAttribute("place_list", placeS.findAll());
+//		model.addAttribute("plan_list", planS.findAll());
+//	}
+	@GetMapping("/insertPlan/{user_num}")
+	@ResponseBody
+	public Optional<UserInfo> insert(Model model, @PathVariable int user_num) {
+		return userS.getUser(user_num);
+		
 	}
 	
 	@PostMapping("/insertPlan")
