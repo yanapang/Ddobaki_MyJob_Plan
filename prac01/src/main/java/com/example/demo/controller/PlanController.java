@@ -22,7 +22,6 @@ import lombok.Setter;
 
 @Controller
 @Setter
-@Getter
 public class PlanController {
 	// ----  service 객체 생성. ------
 	@Autowired
@@ -41,18 +40,11 @@ public class PlanController {
 		return planS.findAll();
 	}
 	
-//	@GetMapping("/insertPlan/{user_num}")
-//	public void insert(@PathVariable("user_num") int user_num, Model model) {
-//		model.addAttribute("user", userS.getUser(user_num));
-//		model.addAttribute("place_list", placeS.findAll());
-//		model.addAttribute("plan_list", planS.findAll());
-//	}
-	@GetMapping("/insertPlan/{user_num}")
-	@ResponseBody
-	public Optional<UserInfo> insert(Model model, @PathVariable int user_num) {
-		return userS.getUser(user_num);
-		
+	@GetMapping("/insertPlan")
+	public void insert( Model model) {
+		model.addAttribute("plan_list", planS.findAll());
 	}
+	
 	
 	@PostMapping("/insertPlan")
 	@ResponseBody

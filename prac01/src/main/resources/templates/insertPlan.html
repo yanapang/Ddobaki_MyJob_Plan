@@ -3,21 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$().ready(function(){
+		$.ajax({
+			url:"/listUser",
+			success:function(data){
+				var userinfo = data;
+			}
+		})
+	})
+</script>
 </head>
 <body>
 
 	<h2>플랜 입력 양식</h2>
 	<hr>
+	
+		<!-- fk -->
+		<!-- 
+		
+		유저 번호(user_num) :<input type="number" name="userinfo.user_num" th:value="userinfo"><br>
+		장소 번호(place_num) : <input type="number" name="place.place_num"  th:value="${p.place_num}"><br>
+		  -->
+		
 	<form action="insertPlan" method="post">
+		
 		<!-- 플랜 그룹 정보 -->
 		플랜 그룹 넘버(plan_group_num) : <input type="number" name="plan_group_num" th:value="${plan_group_num}"><br>
 		플랜 그룹 이름(plan_name) : <input type="text" name="plan_name" th:value="${plan_name}"><br><br>
-		<hr> <!-- fk -->
-		
-		유저 번호(user_num) :<input type="number" name="userinfo.user_num" th:value="${user.user_num}"><br>
-		<!-- 
-		장소 번호(place_num) : <input type="number" name="place.place_num"  th:value="${p.place_num}"><br>
-		  -->
+		<hr>
+		유저 번호(user_num) :<input type="number" name="userinfo.user_num" th:value="${user_num}"><br>
 		<hr>
 		<!-- 여행 세부 내용 -->
 		플랜 번호(plan_num) : <input type="number" name="plan_num" th:value="${plan_num}"><br>
@@ -26,7 +42,7 @@
 		<input type="number" name="plan_flow_num" th:value="${plan_flow_num}"><br>
 		플랜 플로우 이름(해당 장소; plan_flow_name) : <br>
 		<input type="text" name="plan_flow_name" th:value="${plan_flow_name}"><br>
-		
+		<input type="submit" value="등록">
 	</form>
 	
 </body>
