@@ -8,4 +8,5 @@ import com.example.demo.vo.Place;
 @Repository
 public interface PlaceDAO extends JpaRepository<Place, Integer> {
 
+	
 }

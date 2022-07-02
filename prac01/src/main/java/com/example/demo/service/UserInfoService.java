@@ -23,7 +23,8 @@ public class UserInfoService {
 		return user_dao.findAll();
 	}
 	
-	public Optional<UserInfo> getUser(int user_num) {
-		return user_dao.findById(user_num);
+	public UserInfo getUser(int user_num) {
+		return user_dao.findById(user_num).get();
 	}
+	
 }

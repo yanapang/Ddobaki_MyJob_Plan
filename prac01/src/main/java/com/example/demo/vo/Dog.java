@@ -32,3 +32,4 @@ public class Dog {
 	@Column(nullable = false)
 	private int dog_weight;
 }
+

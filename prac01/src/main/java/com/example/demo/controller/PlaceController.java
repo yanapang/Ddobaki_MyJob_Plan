@@ -29,7 +29,8 @@ public class PlaceController {
 	
 	@GetMapping("/getPlace/{place_num}")
 	@ResponseBody
-	public Optional<Place> getPlace(@PathVariable int place_num){
+	public Place getPlace(@PathVariable int place_num){
 		return placeS.getPlace(place_num);
 	}
 }
+

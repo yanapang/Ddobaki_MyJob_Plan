@@ -21,6 +21,7 @@ public class Place {
 	@Id
 	private int place_num;
 	
+
 	@Column(nullable = false)
 	private int	place_region_num;
 	

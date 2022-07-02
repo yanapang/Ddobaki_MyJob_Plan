@@ -23,3 +23,4 @@ public class PlaceImage {
 	@JoinColumn(name="place_num", insertable=true, updatable=true)
 	private Place place;
 }
+

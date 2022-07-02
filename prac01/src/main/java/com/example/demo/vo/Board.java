@@ -29,6 +29,7 @@ public class Board {
 	private int post_num;
 	//@Column(nullable = false) ==>not null
 	
+
 	@Column(nullable = false)
 	private int board_num;
 	

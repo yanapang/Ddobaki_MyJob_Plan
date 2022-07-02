@@ -12,6 +12,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Entity
@@ -20,6 +24,7 @@ import lombok.Data;
 public class Plan {
 	@Id //PK
 	private int	plan_num;
+	
 	
 	//FK
 	@ManyToOne(cascade = CascadeType.REMOVE)
@@ -34,7 +39,9 @@ public class Plan {
 	@Column(columnDefinition = "varchar2(3000)", nullable = false)
 	private String plan_name;
 	@Column(nullable = false)
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date plan_date;
 	@Column(nullable = false)
 	private int plan_flow_num;	
@@ -42,5 +49,6 @@ public class Plan {
 	private String plan_flow_name;	
 	@Column(nullable = false)
 	private int plan_group_num;	
+	
 	
 }

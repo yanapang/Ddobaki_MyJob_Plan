@@ -22,7 +22,9 @@ public class PlaceService {
 		return place_dao.findAll();
 	}
 	
-	public Optional<Place> getPlace(int place_num) {
-		return place_dao.findById(place_num);
+	public Place getPlace(int place_num) {
+		return place_dao.findById(place_num).get();
 	}
+	
 }
+

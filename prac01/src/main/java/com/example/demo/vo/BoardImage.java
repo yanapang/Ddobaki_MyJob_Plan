@@ -23,3 +23,4 @@ public class BoardImage {
 	@Column(length = 4000, nullable = false)
 	private String board_image_file;
 }
+

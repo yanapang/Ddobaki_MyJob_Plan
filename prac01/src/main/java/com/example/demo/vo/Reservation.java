@@ -25,6 +25,7 @@ public class Reservation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int reservation_num;
 	
+	
 	@Column(columnDefinition = "number default 0", nullable = false)
 	private int reservation_park;
 	

@@ -19,6 +19,7 @@ import lombok.Data;
 @Table(name = "room")
 public class Room {
 	
+	
 	@Id
 	private int room_num;
 	

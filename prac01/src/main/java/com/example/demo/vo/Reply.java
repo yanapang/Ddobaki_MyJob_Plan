@@ -20,6 +20,7 @@ public class Reply {
 	@Id
 	private int	reply_num;
 	
+	
 	@ManyToOne
 	@JoinColumn(name="post_num", insertable = true, updatable = true, nullable=false)
 	private Board board;

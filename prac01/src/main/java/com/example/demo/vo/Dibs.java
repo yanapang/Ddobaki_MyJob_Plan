@@ -26,3 +26,4 @@ public class Dibs {
 	@JoinColumn(name="place_num", insertable=true, updatable=true, nullable = false)
 	private Place place;
 }
+

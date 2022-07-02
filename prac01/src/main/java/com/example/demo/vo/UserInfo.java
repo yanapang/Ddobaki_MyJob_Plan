@@ -21,6 +21,7 @@ public class UserInfo {
 	@Id
 	private int user_num;
 	
+	
 	@Column(columnDefinition="varchar2(3000)", nullable = false)
 	private String user_id;
 	@Column(columnDefinition="varchar2(3000)", nullable = false)
