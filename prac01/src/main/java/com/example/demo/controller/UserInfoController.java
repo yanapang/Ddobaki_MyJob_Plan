@@ -34,6 +34,7 @@ public class UserInfoController {
 		return user.findAll();
 	}
 	
+	@ResponseBody
 	@GetMapping("/getUser/{user_num}")
 	public UserInfo getUser(@PathVariable int user_num) {
 		 UserInfo userInfo = user.getUser(user_num);
