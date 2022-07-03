@@ -38,8 +38,8 @@ public class Plan {
 	
 	@Column(columnDefinition = "varchar2(3000)", nullable = false)
 	private String plan_name;
-	@Column(nullable = false)
 	//@Temporal(TemporalType.DATE)
+	@Column(nullable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date plan_date;

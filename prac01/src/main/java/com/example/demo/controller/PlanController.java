@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -38,20 +39,67 @@ public class PlanController {
 	@Autowired
 	private PlanService planS;
 	
-	//----------------- 메소드 -----------
+	// ----------------- 메소드 -----------
+	// ----------------- 리스트 ---------------------
 	@GetMapping("/listPlan") //전체 플랜 리스트 반환. 현재 json형식으로 반환됨. 향후 뷰페이지에서보이게 수정예정.
 	@ResponseBody
 	public List<Plan> findAll(){
 		return planS.findAll();
 	}
 	
-	@GetMapping("/insertPlan/{user_num}") //플랜 입력  
+	@GetMapping("/findByUserNum/{user_num}")
+	@ResponseBody
+	public List<Plan> findByUserNum(@PathVariable int user_num){
+		return planS.findByUserNum(user_num);
+	}
+	@GetMapping("/findByGroupNum/{plan_group_num}")
+	@ResponseBody
+	public List<Plan> findByGroupNum(@PathVariable int plan_group_num){
+		return planS.findByGroupNum(plan_group_num);
+	}
+	@GetMapping("/findByPlanDate/{plan_date}")
+	@ResponseBody
+	public List<Plan> findByPlanDate(@DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable Date plan_date){
+		return planS.findByPlanDate(plan_date);
+	}
+	@GetMapping("/findByAll/{user_num}/{plan_group_num}/{plan_date}")
+	@ResponseBody
+	public List<Plan> findByUserNumAndGroupNumAndPlanDate(@PathVariable int user_num, @PathVariable int plan_group_num, @DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable Date plan_date){
+		return planS.findByUserNumAndGroupNumAndPlanDate(user_num, plan_group_num, plan_date);
+	}
+	
+	// ----------------- GetNextNum ---------------------
+	@GetMapping("/getNextPlanNum")
+	@ResponseBody
+	public int getNextPlanNum() {
+		return planS.getNextPlanNum();
+	}
+	@GetMapping("/getNextGroupNum")
+	@ResponseBody
+	public int getNextGroupNum() {
+		return planS.getNextGroupNum();
+	}
+	@GetMapping("/getNextFlowNum/{plan_group_num}/{plan_date}")
+	@ResponseBody
+	public int getNextFlowNum(@PathVariable int plan_group_num, @DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable Date plan_date) {
+		return planS.getNextFlowNum(plan_group_num, plan_date);
+	}//주소창 요청 방법 ex) => http://localhost:8080/getNextFlowNum/1/2022-07-23
+	
+	//------------------------- 입력 및 수정 --------------------------------
+	
+	@GetMapping("/insertPlan/{user_num}") //플랜 입력창으로 이동.
 	public String insert(Model model, @PathVariable int user_num) {
 		//유저 번호를 함께 입력 받아 해당 유저 정보 model에유지.
 		//로그인 구현 후 httpSession에 담긴 값을 활용할 예정. 
 		model.addAttribute("user", userS.getUser(user_num)); 
-		model.addAttribute("plan_list", planS.findAll());  //플랜과 플레이스 전체값 model로 유지.
-		model.addAttribute("place_list", placeS.findAll()); //플랜은 향후 해당 유저의 플랜만 입력 뷰페이지로 보내는 방식으로 수정 예정?
+		
+		//플랜과 플레이스 전체값 model로 유지.
+		model.addAttribute("plan_list", planS.findAll());  
+		
+		//플랜은 향후 해당 유저의 플랜만 입력 뷰페이지로 보내는 방식으로 수정 예정?
+		model.addAttribute("place_list", placeS.findAll()); 
+		
+		 //pk값 갖고 감!
 		model.addAttribute("plannum", planS.getNextPlanNum());
 		return "/insertPlan"; //model에값들 담고 insertPlan페이지로 입력 받으러 리디렉션!
 	}
@@ -65,4 +113,25 @@ public class PlanController {
 		return mav;
 	}
 	
+	
+	//---------------------------- 삭제 --------------------------------
+	@GetMapping("/deleteByPlanNum/{plan_num}")
+	@ResponseBody
+	public void deleteById(@PathVariable int plan_num) {
+		planS.deleteById(plan_num);
+		//return "deleteByPlanNum_OK";
+	}
+	
+	@GetMapping("/deleteByGroupNum/{plan_group_num}")
+	@ResponseBody
+	public void deleteByGroupNum(@PathVariable int plan_group_num) {
+		planS.deleteByGroupNum(plan_group_num);
+		//return "deleteByPlanNum_OK";
+	}
+	
+	@GetMapping("/deleteByPlanDate/{plan_group_num}/{plan_date}")
+	@ResponseBody
+	public void deleteByPlanDate(@PathVariable int plan_group_num, @DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable Date plan_date) {
+		planS.deleteByPlanDate(plan_group_num, plan_date);
+	}
 }
