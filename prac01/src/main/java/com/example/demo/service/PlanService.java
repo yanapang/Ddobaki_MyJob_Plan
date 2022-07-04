@@ -65,7 +65,7 @@ public class PlanService {
 	
 	//----------- delete ----------
 	//계획 1개 단위 삭제 (기본제공)
-	public void deleteById(int plan_num) {//plan_dao.findById(plan_num).get().getPlan_num()
+	public void deleteById(int plan_num) {
 		plan_dao.deleteById(plan_num);
 	}
 	

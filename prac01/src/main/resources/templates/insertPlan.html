@@ -5,7 +5,9 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-	
+	$("btnDibs").on("click", function(){
+		
+	})
 </script>
 </head>
 <body>
@@ -32,6 +34,8 @@
 		플랜 플로우 이름(해당 장소; plan_flow_name) : <br>
 		<input type="text" name="plan_flow_name" th:value="${plan_flow_name}"><br>
 		<input type="submit" value="등록" id="btnSubmit">
+		<button id="btnDibs">찜리스트 불러오기</button>
+		<button id="btnRsv">예약리스트 불러오기</button>
 	</form>
 	
 </body>
