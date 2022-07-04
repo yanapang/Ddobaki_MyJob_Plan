@@ -48,7 +48,6 @@ public class PlanController {
 	
 	@Autowired
 	private ReservationService resvS;
-
 	
 	// ----------------- 메소드 -----------
 	// ----------------- 리스트 ---------------------
