@@ -11,6 +11,6 @@ import com.example.demo.vo.Reservation;
 @Repository
 public interface ReservationDAO extends JpaRepository<Reservation, Integer> {
 
-	@Query("SELECT r FROM Reservation where user_num=:user_num")
+	@Query("SELECT r FROM Reservation r where user_num=:user_num")
 	public List<Reservation> findByUserNum(int user_num);
 }
