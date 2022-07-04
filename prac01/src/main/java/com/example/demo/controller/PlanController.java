@@ -47,7 +47,8 @@ public class PlanController {
 	private DibsService dibsS;
 	
 	@Autowired
-	private ReservationService reservationS;
+	private ReservationService resvS;
+
 	
 	// ----------------- 메소드 -----------
 	// ----------------- 리스트 ---------------------
@@ -87,7 +88,7 @@ public class PlanController {
 	@GetMapping("/findByReservationUserNum/{user_num}")
 	@ResponseBody
 	public List<Reservation> findByReservationUserNum(@PathVariable int user_num){
-		return reservationS.findByUserNum(user_num);
+		return resvS.findByUserNum(user_num);
 	}
 	
 	// ----------------- GetNextNum ---------------------
@@ -123,6 +124,12 @@ public class PlanController {
 		
 		 //pk값 갖고 감!
 		model.addAttribute("plannum", planS.getNextPlanNum());
+		
+		//찜, 예약리스트 실어주기
+		model.addAttribute("dibs", dibsS.findByUserNum(user_num));
+		model.addAttribute("reservation", resvS.findByUserNum(user_num));
+		
+		
 		return "/insertPlan"; //model에값들 담고 insertPlan페이지로 입력 받으러 리디렉션!
 	}
 
