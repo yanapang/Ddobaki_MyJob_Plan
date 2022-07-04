@@ -19,10 +19,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.example.demo.service.DibsService;
 import com.example.demo.service.PlaceService;
 import com.example.demo.service.PlanService;
+import com.example.demo.service.ReservationService;
 import com.example.demo.service.UserInfoService;
+import com.example.demo.vo.Dibs;
 import com.example.demo.vo.Plan;
+import com.example.demo.vo.Reservation;
 
 import lombok.Setter;
 
@@ -38,6 +42,12 @@ public class PlanController {
 	
 	@Autowired
 	private PlanService planS;
+	
+	@Autowired
+	private DibsService dibsS;
+	
+	@Autowired
+	private ReservationService reservationS;
 	
 	// ----------------- 메소드 -----------
 	// ----------------- 리스트 ---------------------
@@ -66,6 +76,18 @@ public class PlanController {
 	@ResponseBody
 	public List<Plan> findByUserNumAndGroupNumAndPlanDate(@PathVariable int user_num, @PathVariable int plan_group_num, @DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable Date plan_date){
 		return planS.findByUserNumAndGroupNumAndPlanDate(user_num, plan_group_num, plan_date);
+	}
+	
+	@GetMapping("/findByDidsUserNum/{user_num}")
+	@ResponseBody
+	public List<Dibs> findByDibsUserNum(@PathVariable int user_num){
+		return dibsS.findByUserNum(user_num);
+	}
+	
+	@GetMapping("/findByReservationUserNum/{user_num}")
+	@ResponseBody
+	public List<Reservation> findByReservationUserNum(@PathVariable int user_num){
+		return reservationS.findByUserNum(user_num);
 	}
 	
 	// ----------------- GetNextNum ---------------------

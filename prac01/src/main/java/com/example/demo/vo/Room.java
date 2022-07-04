@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Entity
@@ -33,6 +35,7 @@ public class Room {
 	@JoinColumn(name="place_num", insertable=true, updatable=true)
 	private Place place;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "room", cascade = CascadeType.REMOVE)
 	private List<Reservation> reservation;
 	
