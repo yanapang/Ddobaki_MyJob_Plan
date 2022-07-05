@@ -14,7 +14,7 @@
 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></script>
   
 <style type="text/css">
-
+	
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
@@ -35,12 +35,13 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 		});
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = { 
-		    center: new kakao.maps.LatLng(36.0334,129.3798), // 지도의 중심좌표
+		    center: new kakao.maps.LatLng(37.556317, 126.922713), // 지도의 중심좌표
 		    level: 3 // 지도의 확대 레벨
 		};
 
 		//지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 		var map = new kakao.maps.Map(mapContainer, mapOption);
+		var group_num;
 		
  		$("#btnGrpAdd").on("click", function(){
 			$("#planList").hide();
@@ -51,6 +52,7 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 				url:"/getNextGroupNum",
 				success:function(data){
 					$("#planGrpNum").attr('value',data);
+
 				}
 			})
 		});
@@ -62,7 +64,10 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
  		});
  		
 /*  		$("#planList").on(change) */
+
 	});
+	
+	
 </script>
 </head>
 <body>
@@ -101,7 +106,7 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 <!-- 					플랜 그룹 넘버(plan_group_num) : <input type="number" name="plan_group_num" th:value="${groupnum}"><br> -->
 <!-- 					플랜 그룹 이름(plan_name) : <input type="text" name="plan_name" th:value="${plan_name}"><br> -->
 					<hr>
-					<input type="hidden" name="userinfo.user_num" th:value="${user.user_num}" id="userNum">
+					<input type="hidden" id="userNum" name="userinfo.user_num" th:value="${user.user_num}">
 					유저 번호(user_num) : <span th:text="${user.user_num}"></span><br>
 					장소 번호(place_num) :
 					<select name="place.place_num">
