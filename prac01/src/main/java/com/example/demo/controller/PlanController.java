@@ -57,9 +57,10 @@ public class PlanController {
 		return planS.findAll();
 	}
 	
-	@GetMapping("/findByUserNum/{user_num}")
+	@RequestMapping("/findByUserNum")
+	//@GetMapping("/findByUserNum/{user_num}")
 	@ResponseBody
-	public List<Plan> findByUserNum(@PathVariable int user_num){
+	public List<Plan> findByUserNum(@RequestParam("user_num") int user_num){
 		return planS.findByUserNum(user_num);
 	}
 	@GetMapping("/findByGroupNum/{plan_group_num}")
