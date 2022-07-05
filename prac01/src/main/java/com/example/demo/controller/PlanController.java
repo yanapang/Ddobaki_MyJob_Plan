@@ -123,6 +123,8 @@ public class PlanController {
 		
 		 //pk값 갖고 감!
 		model.addAttribute("plannum", planS.getNextPlanNum());
+		//새로운 groupnum
+		model.addAttribute("groupnum", planS.getNextGroupNum());
 		
 		//찜, 예약리스트 실어주기
 		model.addAttribute("dibs", dibsS.findByUserNum(user_num));
