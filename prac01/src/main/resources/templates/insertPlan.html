@@ -19,7 +19,9 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
-		var user_num = 3; // 세션에 저장된 user_num 가져오기
+		var user_num = $("#userNum").val();
+		//var user_num = 3; // 세션에 저장된 user_num 가져오기
+		console.log(user_num);
 		$.ajax({
 			url:"/findByUserNum",
 			data:{user_num: user_num},
@@ -41,6 +43,10 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 		var map = new kakao.maps.Map(mapContainer, mapOption);
 		
 	});
+	
+	$("#btnGrpAdd").on("click", function(){
+		
+	})
 </script>
 </head>
 <body>
@@ -81,7 +87,7 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 					플랜 그룹 넘버(plan_group_num) : <input type="number" name="plan_group_num" th:value="${groupnum}"><br>
 					플랜 그룹 이름(plan_name) : <input type="text" name="plan_name" th:value="${plan_name}"><br>
 					<hr>
-					<input type="hidden" name="userinfo.user_num" th:value="${user.user_num}">
+					<input type="hidden" id="userNum" name="userinfo.user_num" th:value="${user.user_num}">
 					유저 번호(user_num) : <span th:text="${user.user_num}"></span><br>
 					장소 번호(place_num) :
 					<select name="place.place_num">
