@@ -14,6 +14,13 @@
 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></script>
   
 <style type="text/css">
+	#map {
+		height:70vh;
+	}
+	
+	.input_box{
+		height: 60vh;
+	}
 	
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -76,36 +83,38 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 	<hr>
 	
 	<div class="container border">
-		<div class="form-inline">
-			<!-- 여행 타이틀 (plan_group_num) -->
-			<div class="input-group border">
-			<input type="text" id="planGrpNum" value="">
-			<input style="display: none" id="planText" type="text" class="form-control" name="plan_name">
-			<select id="planList" class="form-select" aria-label="select-plan-group">
-				<option selected>여행 계획 선택</option>
-			</select>
-			<div class="input-group-addon input-group-button">
-				<button type="button" id="btnGrpAdd" class="btn btn-dark">새그룹추가</button>
-				<button style="display: none" type="button" id="btnGrpList" class="btn btn-dark">리스트보이기</button>
-				<button type="button" id="btnGrpDel" class="btn btn-dark">삭제</button>
-			</div>
-			</div>
-		</div> 
-		<!-- 여기까지 여행 타이틀 코드 -->
-		<!-- 여기부터 주요 컨텐츠 -->
-		<div class="row">
-		   <div id="map" class="col border"></div> <!-- 지도 map -->
-		   <div class="col border">
-		     <form action="/savePlan" method="post">
+	     <form action="/savePlan" method="post">
+		     <div class="form-inline">
+					<!-- 여행 타이틀 (plan_group_num) -->
+					<div class="input-group border">
+		
+					<input style="display: none" id="planText" type="text" class="form-control" name="plan_name">
+					<select id="planList" class="form-select" aria-label="select-plan-group">
+						<option selected>여행 계획 선택</option>
+					</select>
+				<!-- 플랜 그룹 넘버(plan_group_num) : <input type="number" name="plan_group_num" th:value="${groupnum}"><br>
+					플랜 그룹 이름(plan_name) : <input type="text" name="plan_name" th:value="${plan_name}"><br> -->
+					<div class="input-group-addon input-group-button">
+						<button type="button" id="btnGrpAdd" class="btn btn-dark">새그룹추가</button>
+						<button style="display: none" type="button" id="btnGrpList" class="btn btn-dark">리스트보이기</button>
+						<button type="button" id="btnGrpDel" class="btn btn-dark">삭제</button>
+					</div>
+					</div>
+				</div> 
+				<!-- 여기까지 여행 타이틀 코드 -->
+				<!-- 여기부터 주요 컨텐츠 -->
+				<div class="row">
+				   <div id="map" class="col border"></div> <!-- 지도 map -->
+				   <div class="col border">
 		     	<div class="row justify-content-center">
 		     		<!-- 여행 날짜(plan_date) : <br> -->
 		     		<input type="date" name="plan_date" th:value="${plan_date}" class="col-5"><br>
 		     	</div>
 				<!-- 플랜 그룹 정보 -->
-				<div class="border">
+				<div class="border input_box">
 <!-- 					플랜 그룹 넘버(plan_group_num) : <input type="number" name="plan_group_num" th:value="${groupnum}"><br> -->
 <!-- 					플랜 그룹 이름(plan_name) : <input type="text" name="plan_name" th:value="${plan_name}"><br> -->
-					<hr>
+
 					<input type="hidden" id="userNum" name="userinfo.user_num" th:value="${user.user_num}">
 					유저 번호(user_num) : <span th:text="${user.user_num}"></span><br>
 					장소 번호(place_num) :
@@ -128,17 +137,11 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 				  <button type="button" class=" btn btn-dark">수정</button>
 				  <button type="button" class=" btn btn-dark">삭제</button>
 				</div>
+		  	 </div>
 			</form>
-		   </div>
 	 	</div>
-	 	
 	 	<!-- 여기까지 주요 컨텐츠 -->
-	 	
 	</div>
-	
-	<!-- <hr>
-		<button id="btnDibs">찜리스트 불러오기</button>
-		<button id="btnRsv">예약리스트 불러오기</button> -->
 	<hr>
 		찜 리스트: 
 		<select name="dibs.place_num" >
@@ -154,8 +157,3 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 	
 </body>
 </html>
-
-<!-- 
-
-	
- -->
