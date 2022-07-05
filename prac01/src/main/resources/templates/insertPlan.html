@@ -14,14 +14,12 @@
 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></script>
   
 <style type="text/css">
-
+	
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
-		var user_num = $("#userNum").val();
-		//var user_num = 3; // 세션에 저장된 user_num 가져오기
-		console.log(user_num);
+		var user_num = $("#userNum").val(); // 세션에 저장된 user_num 가져오기
 		$.ajax({
 			url:"/findByUserNum",
 			data:{user_num: user_num},
@@ -35,18 +33,28 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 		});
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = { 
-		    center: new kakao.maps.LatLng(36.0334,129.3798), // 지도의 중심좌표
+		    center: new kakao.maps.LatLng(37.556317, 126.922713), // 지도의 중심좌표
 		    level: 3 // 지도의 확대 레벨
 		};
 
 		//지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 		var map = new kakao.maps.Map(mapContainer, mapOption);
+		var group_num;
 		
  		$("#btnGrpAdd").on("click", function(){
 			$("#planList").hide();
 			$("#planText").show();
 			$(this).hide();
 			$("#btnGrpList").show();
+			
+			//그룹넘버 가져오기!
+			$.ajax({
+				url:"/getNextGroupNum",
+				success:function(data){
+					group_num = data;
+					console.log(group_num);
+				}
+			})
 		});
  		$("#btnGrpList").on("click", function(){
  			$("#planList").show();
@@ -54,11 +62,10 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
  			$(this).hide();
  			$("#btnGrpAdd").show();
  		});
+
 	});
 	
-	$("#btnGrpAdd").on("click", function(){
-		
-	})
+	
 </script>
 </head>
 <body>
