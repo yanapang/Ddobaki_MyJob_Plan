@@ -14,23 +14,38 @@
 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></script>
   
 <style type="text/css">
+	
 	#map {
 		height:70vh;
 	}
 	
+	.grpNum {
+		width: 40vw;
+		margin-left: 25%;
+		padding:1%;
+	}
 	.input_box{
 		height: 60vh;
+		overflow: auto;
 	}
-	
+	.date, .input_box, .btnAll {
+		padding:1.5%;
+	}
+	#map{
+		margin:3px;
+		border:3px;
+	}
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
-		var user_num = $("#userNum").val(); // 세션에 저장된 user_num 가져오기
+		var user_num = $("#userNum").val(); // 실제 구현시 세션에 저장된 user_num 가져오기
+		var placelist;
 		$.ajax({
 			url:"/findByUserNum",
 			data:{user_num: user_num},
 			success:function(list){
+				placelist=list;
 				console.log(list);
 				for(i=0; i<list.length; i++){
 					var option = $("<option></option>");
@@ -79,81 +94,86 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 </head>
 <body>
 
-	<h2>플랜 입력 양식</h2>
-	<hr>
-	
-	<div class="container border">
-	     <form action="/savePlan" method="post">
-		     <div class="form-inline">
-					<!-- 여행 타이틀 (plan_group_num) -->
-					<div class="input-group border">
-		
-					<input style="display: none" id="planText" type="text" class="form-control" name="plan_name">
-					<select id="planList" class="form-select" aria-label="select-plan-group">
-						<option selected>여행 계획 선택</option>
-					</select>
-				<!-- 플랜 그룹 넘버(plan_group_num) : <input type="number" name="plan_group_num" th:value="${groupnum}"><br>
-					플랜 그룹 이름(plan_name) : <input type="text" name="plan_name" th:value="${plan_name}"><br> -->
-					<div class="input-group-addon input-group-button">
-						<button type="button" id="btnGrpAdd" class="btn btn-dark">새그룹추가</button>
-						<button style="display: none" type="button" id="btnGrpList" class="btn btn-dark">리스트보이기</button>
-						<button type="button" id="btnGrpDel" class="btn btn-dark">삭제</button>
-					</div>
-					</div>
-				</div> 
-				<!-- 여기까지 여행 타이틀 코드 -->
-				<!-- 여기부터 주요 컨텐츠 -->
-				<div class="row">
-				   <div id="map" class="col border"></div> <!-- 지도 map -->
-				   <div class="col border">
-		     	<div class="row justify-content-center">
-		     		<!-- 여행 날짜(plan_date) : <br> -->
-		     		<input type="date" name="plan_date" th:value="${plan_date}" class="col-5"><br>
-		     	</div>
-				<!-- 플랜 그룹 정보 -->
-				<div class="border input_box">
-<!-- 					플랜 그룹 넘버(plan_group_num) : <input type="number" name="plan_group_num" th:value="${groupnum}"><br> -->
-<!-- 					플랜 그룹 이름(plan_name) : <input type="text" name="plan_name" th:value="${plan_name}"><br> -->
+<h3>PLAN</h3>
+<hr>
 
-					<input type="hidden" id="userNum" name="userinfo.user_num" th:value="${user.user_num}">
-					유저 번호(user_num) : <span th:text="${user.user_num}"></span><br>
-					장소 번호(place_num) :
-					<select name="place.place_num">
+<div class="container border">
+    <form action="/savePlan" method="post">
+     <div class="form-inline">
+		<!-- 여행 타이틀 (plan_group_num) -->
+		<div class="input-group grpNum">
+			<input style="display: none" id="planText" type="text" class="form-control" name="plan_name">
+			<select id="planList" class="form-select" aria-label="select-plan-group">
+				<option selected>여행 계획 선택</option>
+			</select>
+		<!-- 플랜 그룹 넘버(plan_group_num) : <input type="number" name="plan_group_num" th:value="${groupnum}"><br>
+			플랜 그룹 이름(plan_name) : <input type="text" name="plan_name" th:value="${plan_name}"><br> -->
+			<div class="input-group-addon input-group-button">
+				<button type="button" id="btnGrpAdd" class="btn btn-dark">새그룹추가</button>
+				<button style="display: none" type="button" id="btnGrpList" class="btn btn-dark">리스트보이기</button>
+				<button type="button" id="btnGrpDel" class="btn btn-dark">삭제</button>
+			</div>
+		</div>
+	</div> 
+	<!-- 여기까지 여행 타이틀 -->
+	<!-- 여기부터 주요 컨텐츠 -->
+	<div class="row bottom border">
+	   	<div id="map" class="col border"></div> <!-- 지도 map --> <!-- 왼쪽 -->
+	   	<div class="col right border"> <!-- 오른쪽 -->
+	     	<!-- 여행 날짜(plan_date) -->
+   			<div class="row justify-content-center date">
+	     		<input type="date" name="plan_date" th:value="${plan_date}" class="col-5"><br>
+     		</div>
+		<!-- 플랜 그룹 정보 -->
+		<div class="border input_box">
+			<!-- 플랜 그룹 넘버(plan_group_num) : <input type="number" name="plan_group_num" th:value="${groupnum}"><br> -->
+			<!-- 플랜 그룹 이름(plan_name) : <input type="text" name="plan_name" th:value="${plan_name}"><br> -->
+			<!-- 유저 번호(user_num) -->
+			<input type="hidden" id="userNum" name="userinfo.user_num" th:value="${user.user_num}">
+			<!-- 여행 세부 내용 -->
+			<input id="plannum" type="hidden" name="plan_num" th:value="${plannum}">
+			pk:<span th:text="${plannum}"></span>
+			
+			<div class="input-group">
+				
+				플로우넘버: <input id="flownum" type="number" name="plan_flow_num" th:text="${plan_flow_num}" th:value="${plan_flow_num}">
+				플로우이름: 
+				<input type="text" name="plan_flow_name" th:value="${plan_flow_name}">
+				
+				<button id="btnPlace" class="placeList" type="button">전체장소</button>
+					<select name="place.place_num" style="display:none">
 						<option value="">-- 선택 --</option>
 						<option th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}"></option>
 					</select>
-					<hr>
-					<!-- 여행 세부 내용 -->
-					플랜 번호(plan_num) : <input type="number" name="plan_num" th:value="${plannum}"><br>
-					플랜 플로우 번호(해당 날짜의 여행 순서; plan_flow_num): <br>
-					<input type="number" name="plan_flow_num" th:value="${plan_flow_num}"><br>
-					플랜 플로우 이름(해당 장소; plan_flow_name) : <br>
-					<input type="text" name="plan_flow_name" th:value="${plan_flow_name}">
-					<input type="submit" value="등록" id="btnSubmit">
-				</div>
-			   <!-- 입력, 수정, 삭제 버튼위치 -->
-			 	<div class="d-flex justify-content-end"  aria-label="save, delete button">
-				  <button type="button" class=" btn btn-dark">저장</button>
-				  <button type="button" class=" btn btn-dark">수정</button>
-				  <button type="button" class=" btn btn-dark">삭제</button>
-				</div>
-		  	 </div>
-			</form>
-	 	</div>
-	 	<!-- 여기까지 주요 컨텐츠 -->
-	</div>
-	<hr>
-		찜 리스트: 
-		<select name="dibs.place_num" >
-			<option th:each="d:${dibs}" th:value="${d.place.place_num}" th:text="${d.place.place_name}"></option>
-		</select><br>
-
+				<button id="btnDibs" class="placeList" type="button">찜</button>
+				<!-- 찜리스트 셀렉트 -->
+					<select name="dibs.place_num" style="display:none">
+						<option th:each="d:${dibs}" th:value="${d.place.place_num}" th:text="${d.place.place_name}"></option>
+					</select>
+				<button id="btnRsv" class="placeList" type="button">예약</button>
+				<!-- 예약리스트 셀렉트 -->
+					<select name="reservation.place_num" style="display:none">
+						<option th:each="r:${reservation}" th:value="${r.place.place_num}" th:text="${r.place.place_name}"></option>
+					</select><br>
+			</div><!-- input-group 끝 -->
 		<hr>
+			<!-- <div class="input-group-addon input-group-button">
+				<button type="button" id="btnGrpAdd" class="btn btn-dark">새그룹추가</button>
+				<button style="display: none" type="button" id="btnGrpList" class="btn btn-dark">리스트보이기</button>
+				<button type="button" id="btnGrpDel" class="btn btn-dark">삭제</button>
+			</div> -->
+			<!-- <input type="submit" value="등록" id="btnSubmit"><br> -->
+		</div><!-- input_box 끝 -->
 		
-		예약 리스트:
-		<select name="reservation.place_num">
-			<option th:each="r:${reservation}" th:value="${r.place.place_num}" th:text="${r.place.place_name}"></option>
-		</select><br>
-	
+	   <!-- 입력, 수정, 삭제 버튼위치 -->
+	 	<div class="d-flex justify-content-end btnAll"  aria-label="save, delete button">
+		  <button id="btnSubmit" type="submit" class="btn btn-dark">수정/저장</button>
+		  <button type="reset" class="btn btn-dark"> 리셋</button>
+		  <button id="btnDelete" type="button" class="btn btn-dark">삭제</button>
+		</div>
+ 	 </div><!-- 오른쪽 박스 끝 -->
+  	 </div><!-- bottom 박스 끝 -->
+	</form>
+</div> <!-- 전체 컨테이너 끝-->
 </body>
 </html>
