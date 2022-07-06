@@ -101,9 +101,9 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
  		});
  		
  		$("#planList").on("change", function(){
-  			var text = $("#planList option:selected").text();
+  			var text = $(this).attr('value').text();
   			$("#planText").attr({value:text});
- 		})
+ 		}); 
  		
  		$("#AddPlan").on("click", function(){
  			
@@ -144,7 +144,21 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
  			
  		})
  		
+ 		$("#placeList > li").on("click", function(){
+ 			var text = $(this).text();
+ 			console.log(text);
+ 			$("#flowText").attr({value:text});
+ 		});
  		
+ 		$("#dibsList > li").on("click", function(){
+ 			var text = $(this).text();
+ 			$("#flowText").attr({value:text});
+ 		});
+ 		
+ 		$("#rsvList > li").on("click", function(){
+ 			var text = $(this).text();
+ 			$("#flowText").attr({value:text});
+ 		});
 	});
 	
 	
@@ -162,7 +176,7 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 		<div class="input-group grpNum">
 			<input style="display: none" id="planText" type="text" class="form-control" name="plan_name">
 			<select id="planList" name="plan_group_num" class="form-select" aria-label="select-plan-group">
-				<option selected>여행 계획 선택</option>
+				<option selected disabled>여행 계획 선택</option>
 			</select>
 		<!-- 플랜 그룹 넘버(plan_group_num) : <input type="number" name="plan_group_num" th:value="${groupnum}"><br>
 			플랜 그룹 이름(plan_name) : <input type="text" name="plan_name" th:value="${plan_name}"><br> -->
@@ -195,36 +209,27 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 			<input id="plannum" type="hidden" name="plan_num" th:value="${plannum}">
 			<!-- pk:<span th:text="${plannum}"></span> -->
 			
+
 			<div class="input-group" >
 				<div id="inputAppend"></div>
 				<br>
-				<!-- 플로우넘버: <input id="flownum" type="number" name="plan_flow_num" th:text="${plan_flow_num}" th:value="${plan_flow_num}">
-				플로우이름: 
-				<input type="text" name="plan_flow_name" th:value="${plan_flow_name}">
-
-				플레이스 전체 리스트 셀렉트
-					<select name="place.place_num" >style="display:none"
-						<option value="">-- 선택 --</option>
-						<option th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}"></option>
-					</select>
-				찜리스트 셀렉트
-					<select name="place.place_num" >style="display:none"
-						<option th:each="d:${dibs}" value="place.place_num" th:value="${d.place.place_num}" th:text="${d.place.place_name}"></option>
-					</select>
-				예약리스트 셀렉트
-					<select name="place.place_num" >style="display:none"
-						<option th:each="r:${reservation}" th:value="${r.place.place_num}" th:text="${r.place.place_name}"></option>
-					</select><br> -->
-				<div id="btnPlaceAppend"></div>
-				
+				<input type="text" name="plan_flow_name" th:value="${plan_flow_name}" id="flowText">
+				<!-- 장소, 찜, 예약 리스트 드롭박스 -->
+				<div class="btn-group">
+ 					<button id="btnPlace" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">장소 선택</button>
+  					<ul size="5" id="placeList" class="dropdown-menu">
+  					<li  id="placeListOp" class="dropdown-item" th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}">
+  					</ul>
+  					<button id="btnDibs" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">찜 리스트</button>
+  					<ul id="dibsList" class="dropdown-menu">
+  					<li  id="dibsListOp" class="dropdown-item" th:each="d:${dibs}" th:value="${d.place.place_num}" th:text="${d.place.place_name}">
+  					</ul>
+  					<button id="btnRsv" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">예약 리스트</button>
+  					<ul id="rsvList" class="dropdown-menu">
+  					<li  id="rsvListOp" class="dropdown-item" th:each="r:${reservation}" th:value="${r.place.place_num}" th:text="${r.place.place_name}">
+  					</ul>
+				</div>
 			</div><!-- input-group 끝 -->
-		
-			<!-- <div class="input-group-addon input-group-button">
-				<button type="button" id="	btnGrpAdd" class="btn btn-dark">새그룹추가</button>
-				<button style="display: none" type="button" id="btnGrpList" class="btn btn-dark">리스트보이기</button>
-				<button type="button" id="btnGrpDel" class="btn btn-dark">삭제</button>
-			</div> -->
-			<!-- <input type="submit" value="등록" id="btnSubmit"><br> -->
 		</div><!-- input_box 끝 -->
 		
 	   <!-- 입력, 수정, 삭제 버튼위치 -->
