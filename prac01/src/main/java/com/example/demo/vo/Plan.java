@@ -33,7 +33,7 @@ public class Plan {
 	
 	//FK
 	@ManyToOne
-	@JoinColumn(name="place_num", insertable=true, updatable=true, nullable = false)
+	@JoinColumn(name="place_num", insertable=true, updatable=true, nullable = true)
 	private Place place;
 	
 	@Column(columnDefinition = "varchar2(3000)", nullable = false)

@@ -86,11 +86,11 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
  		});
  		
  		$("#planList").on("change", function(){
- 			$("#planText") = "";
- 			var text01 = $("#planText").attr({value:$(this).text()});
- 			console.log(text01);
+  			var text = $("#planList option:selected").text();
+  			$("#planText").attr({value:text});
  		})
-
+ 		
+ 		$()
 	});
 	
 	
@@ -151,7 +151,7 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 					</select>
 				<button id="btnDibs" class="placeList" type="button">찜</button>
 				<!-- 찜리스트 셀렉트 -->
-					<select name="dibs.place_num" style="display:none">
+					<select name="dibs.place_num">
 						<option th:each="d:${dibs}" th:value="${d.place.place_num}" th:text="${d.place.place_name}"></option>
 					</select>
 				<button id="btnRsv" class="placeList" type="button">예약</button>
