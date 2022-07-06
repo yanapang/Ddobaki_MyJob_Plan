@@ -14,9 +14,13 @@
 src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></script>
   
 <style type="text/css">
-	
+	/* *{
+		box-sizing: border-box;
+	} */
 	#map {
 		height:70vh;
+		margin:3px;
+		border:3px;
 	}
 	
 	.grpNum {
@@ -31,15 +35,26 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 	.date, .input_box, .btnAll {
 		padding:1.5%;
 	}
-	#map{
-		margin:3px;
-		border:3px;
+	 #inputAppend {
+		width:100%;
+		
+		position: relative;
+	} 
+	.input-group div input{
+		justify-content: center;
+		width: 65%;	
+	} 
+	.input-group div{
+		/* background-color: red; */
+		padding: 5px;
 	}
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
 		var user_num = $("#userNum").val(); // 실제 구현시 세션에 저장된 user_num 가져오기
+		var plan_num = $("#plannum").val(); //플랜넘버 타임리프로 가져온값 가져옴
+		console.log("plan_num: "+plan_num);
 		var placelist;
 		$.ajax({
 			url:"/findByUserNum",
@@ -90,7 +105,46 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
   			$("#planText").attr({value:text});
  		})
  		
- 		$()
+ 		$("#AddPlan").on("click", function(){
+ 			
+ 			var str = $("<div></div>").attr({
+ 				name: "plan_name",
+ 				class: "input-group div row  mb-3"
+ 			}).append("<input>").attr({
+ 				type: "text",
+ 				class :"form-control"
+ 			});
+ 			var btn=$("<button></button>").attr({
+ 				id: "btnPlace",
+ 				class: "placeList btn btn-dark",
+ 				type: "button",
+ 			});
+ 			var btn1 = $("<button></button>").attr({
+ 				id: "btnPlace",
+ 				class: "placeList btn btn-dark",
+ 				type: "button",
+ 			}).append("<html>", "Place");
+ 			var btn2 = $("<button></button>").attr({
+ 				id: "btnDibs",
+ 				class: "placeList btn btn-dark",
+ 				type: "button",
+ 			}).append("<html>", "찜");
+ 			var btn3 = $("<button></button>").attr({
+ 				id: "btnRsv",
+ 				class: "placeList btn btn-dark",
+ 				type: "button",
+ 			}).append("<html>", "예약");
+ 			var btn4 = $("<button></button>").attr({
+ 				id: "btnDel",
+ 				class: "placeList btn btn-dark",
+ 				type: "button",
+ 			}).append("<html>", "X");
+ 			
+ 			$("#inputAppend").append(str.append(btn1,btn2,btn3,btn4));
+ 			
+ 		})
+ 		
+ 		
 	});
 	
 	
@@ -124,9 +178,11 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 	<div class="row bottom border">
 	   	<div id="map" class="col border"></div> <!-- 지도 map --> <!-- 왼쪽 -->
 	   	<div class="col right border"> <!-- 오른쪽 -->
+	   	
 	     	<!-- 여행 날짜(plan_date) -->
-   			<div class="row justify-content-center date">
-	     		<input type="date" name="plan_date" th:value="${plan_date}" class="col-5"><br>
+   			<div class="row justify-content-center date input-group-addon input-group-button">
+	     		<input type="date" name="plan_date" th:value="${plan_date}" class="col-5">
+	     		<button type="button" id="AddPlan" class="btn btn-dark col-2">동선추가</button>
 	     		
      		</div>
 		<!-- 플랜 그룹 정보 -->
@@ -137,32 +193,32 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 			<input type="hidden" id="userNum" name="userinfo.user_num" th:value="${user.user_num}">
 			<!-- 여행 세부 내용 -->
 			<input id="plannum" type="hidden" name="plan_num" th:value="${plannum}">
-			pk:<span th:text="${plannum}"></span>
+			<!-- pk:<span th:text="${plannum}"></span> -->
 			
-			<div class="input-group">
-				
-				플로우넘버: <input id="flownum" type="number" name="plan_flow_num" th:text="${plan_flow_num}" th:value="${plan_flow_num}">
+			<div class="input-group" >
+				<div id="inputAppend"></div>
+				<br>
+				<!-- 플로우넘버: <input id="flownum" type="number" name="plan_flow_num" th:text="${plan_flow_num}" th:value="${plan_flow_num}">
 				플로우이름: 
 				<input type="text" name="plan_flow_name" th:value="${plan_flow_name}">
-				
-				<button id="btnPlace" class="placeList" type="button">전체장소</button>
-					<select name="place.place_num" ><!-- style="display:none" -->
+
+				플레이스 전체 리스트 셀렉트
+					<select name="place.place_num" >style="display:none"
 						<option value="">-- 선택 --</option>
 						<option th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}"></option>
 					</select>
-				<button id="btnDibs" class="placeList" type="button">찜</button>
-				<!-- 찜리스트 셀렉트 -->
-
-					<select name="dibs.place_num" ><!-- style="display:none" -->
-						<option th:each="d:${dibs}" th:value="${d.place.place_num}" th:text="${d.place.place_name}"></option>
+				찜리스트 셀렉트
+					<select name="place.place_num" >style="display:none"
+						<option th:each="d:${dibs}" value="place.place_num" th:value="${d.place.place_num}" th:text="${d.place.place_name}"></option>
 					</select>
-				<button id="btnRsv" class="placeList" type="button">예약</button>
-				<!-- 예약리스트 셀렉트 -->
-					<select name="reservation.place_num" ><!-- style="display:none" -->
+				예약리스트 셀렉트
+					<select name="place.place_num" >style="display:none"
 						<option th:each="r:${reservation}" th:value="${r.place.place_num}" th:text="${r.place.place_name}"></option>
-					</select><br>
+					</select><br> -->
+				<div id="btnPlaceAppend"></div>
+				
 			</div><!-- input-group 끝 -->
-		<hr>
+		
 			<!-- <div class="input-group-addon input-group-button">
 				<button type="button" id="	btnGrpAdd" class="btn btn-dark">새그룹추가</button>
 				<button style="display: none" type="button" id="btnGrpList" class="btn btn-dark">리스트보이기</button>
