@@ -48,28 +48,32 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 		/* background-color: red; */
 		padding: 5px;
 	}
+	btn {
+		size: small;
+	}
+	.dropdown {
+		height: 10vh;
+		overflow: auto;
+	}
+	
+
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript">
+<script th:inline="javascript" type="text/javascript">
 	$(function(){
 		var user_num = $("#userNum").val(); // 실제 구현시 세션에 저장된 user_num 가져오기
 		var plan_num = $("#plannum").val(); //플랜넘버 타임리프로 가져온값 가져옴
 		console.log("plan_num: "+plan_num);
 		var placelist;
-		
+		var cnt =0;
+		var btn1;
 		//유저의 플랜 가져오기
 		$.ajax({
 			url:"/findByUserNum",
 			data:{user_num: user_num},
 			success:function(list){
 				placelist=list;
-				console.log(list);
-				for(i=0; i<list.length; i++){
-					var option = $("<option></option>");
-					$("#planList").append($(option).html(list[i].plan_name).attr({
-						value: list[i].plan_group_num,
-					}));
-				} 
+				console.log(list);	
 			}
 		});
 		
@@ -80,12 +84,12 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 			success:function(data){
 				placeAll = data;
 				console.log(placeAll);
-				/* for(i=0; i<placeAll.length; i++){
+				for(i=0; i<placeAll.length; i++){
 					var li = $("<li></li>");
-					$("#placeListUl").append($(li).html(list[i].place_name).attr({
-						value: list[i].place_num,
+					$("#placeList").append($(li).html(placeAll[i].place_name).attr({
+						value: placeAll[i].place_num,
 					}));
-				}  */
+				}
 			}
 		})
 		
@@ -126,38 +130,98 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
  		
  		$("#AddPlan").on("click", function(){
  			
+ 			var input = $("<input>").attr({
+ 				id: "flowText"+cnt++,
+ 				type: "text",
+ 				class :"form-control flowText"
+			});
+ 			
  			var str = $("<div></div>").attr({
  				name: "plan_name",
- 				class: "input-group div row  mb-3"
- 			}).append("<input>").attr({
- 				type: "text",
- 				class :"form-control"
- 			});
- 			var btn=$("<button></button>").attr({
+ 				class: "input-group div mb-1"
+ 			}).append(input);
+ 			
+ 			
+ 	 		
+/*  			var btn1 = $('<button </button>').attr({
  				id: "btnPlace",
- 				class: "placeList btn btn-dark",
+ 				class: "btn btn-secondary btn-sm dropdown-toggle",
  				type: "button",
- 			});
- 			var btn1 = $("<button></button>").attr({
+////////-----------------
+ 			}); */
+ 			
+ 			
+/*  			var btn1 = $('<button data-bs-toggle="dropdown" aria-expanded="false">place</button>').attr({
+ 				class: "",
  				id: "btnPlace",
- 				class: "btn btn-secondary btn-sm dropdown-toggle data-bs-toggle dropdown",
  				type: "button",
- 			}).append("<html>", "Place");
- 			var btn2 = $("<button></button>").attr({
+ 			}); */
+ 			/* btn1 = $('<button data-bs-auto-close="true" >place</button>').attr({ */
+ 			btn1 = $('<button >place</button>').attr({
+ 				class: "btn btn-default dropdown-toggle",
+ 				id: "btnPlace"+cnt,
+ 				type: "button",
+ 			}).css({
+ 				class: "dropdown-toggle",
+ 				"data-bs-toggle":"dropdown"
+ 				"data-bs-auto-close":"true",
+
+ 				"aria-expanded": "false"});
+ 			
+ 			var ul1 = btn1.append($('<ul id="placeList"></ul>').css("dropdown-menu"));
+ 			
+ 			$( btn1 ).on("click", function(){
+
+ 				
+ 				var li1 = ul1.empty();
+ 				$.each(placeAll, function(key, value){
+	 				
+ 					var addPlace = $("<li>"+value.place_name+"</li>").attr({
+ 						class: "dropdown-item",
+ 						value: value.place_num
+ 					});
+ 					
+ 					ul1.append(addPlace);
+
+ 					
+ 					$(addPlace).on("click", function(){
+						var thisPName = value.place_name;
+						var thisPNum = value.place_num;
+						var lat = value.place_lat;
+						var lng = value.place_lng;
+			 			console.log("장소명: "+value.place_name + ", 장소번호: "+ value.place_num+", lat: "+ lat +", lng: "+lng);
+						$(this).parents(".flowText").attr({
+							value: thisPName
+						});
+						
+						
+						//$(this).parents(".flowText").attr("value", thisPName);
+			 			//$(this).options[this.selectedIndex].text
+						cnt++;
+ 					})
+ 				})
+ 				
+ 				
+ 			})//btn1 끝
+/* =
+		
+ 			}).after('<ul id="placeList" class="dropdown-menu"><li id="placeListOp" class="dropdown-item" th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}"></li></ul>');
+*/
+ 			var btn2 = $("<button>찜</button>").attr({
  				id: "btnDibs",
  				class: "btn btn-secondary btn-sm dropdown-toggle",
  				type: "button",
- 			}).append("<html>", "찜");
- 			var btn3 = $("<button></button>").attr({
+ 			}).append();
+ 			var btn3 = $("<button>예약</button>").attr({
  				id: "btnRsv",
  				class: "btn btn-secondary btn-sm dropdown-toggle",
  				type: "button",
- 			}).append("<html>", "예약");
- 			var btn4 = $("<button></button>").attr({
+ 			}).append();
+ 			var btn4 = $("<button>X</button>").attr({
  				id: "btnDel",
  				class: "btn btn-secondary btn-sm",
  				type: "button",
- 			}).append("<html>", "X");
+ 			})
  			
  			
  		/* 	var ul1 = $("<ul></ul>").attr({
@@ -193,11 +257,14 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
  			
  			
  			
- 			$("#inputAppend").append(str.append(btn1,btn2,btn3,btn4));
+ 			$("#inputAppend").append(str.append(ul1,btn2,btn3,btn4));
  			
+
  		})
  		
- 		$("#placeList > li").on("click", function(){
+ 		
+ 		$(btn1).on("click", "li", function(){
+ 			console.log(li1);
  			var text = $(this).text();
  			console.log(text);
  			$("#flowText").attr({value:text});
@@ -212,8 +279,27 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
  			var text = $(this).text();
  			$("#flowText").attr({value:text});
  		});
+
+
+ 
+
+/* 		<div class="btn-group">
+			<button id="btnPlace" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">장소 선택</button>
+			<ul id="placeList" class="dropdown-menu">
+			<li  id="placeListOp" class="dropdown-item" th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}">
+			</ul>
+			<button id="btnDibs" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">찜 리스트</button>
+			<ul id="dibsList" class="dropdown-menu">
+			<li  id="dibsListOp" class="dropdown-item" th:each="d:${dibs}" th:value="${d.place.place_num}" th:text="${d.place.place_name}">
+			</ul>
+			<button id="btnRsv" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">예약 리스트</button>
+			<ul id="rsvList" class="dropdown-menu">
+			<li  id="rsvListOp" class="dropdown-item" th:each="r:${reservation}" th:value="${r.place.place_num}" th:text="${r.place.place_name}">
+			</ul>
+	</div> */
+ 		
+
 	});
-	
 	
 </script>
 </head>
@@ -266,10 +352,11 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 			<div class="input-group" >
 				<div id="inputAppend"></div>
 				<br>
+<!-- <<<<<<< HEAD
 				<input type="text" name="plan_flow_name" th:value="${plan_flow_name}" id="flowText">
-				<!-- <input type="hidden"  id="placeListOp2" class="dropdown-item" th:value="${place_list}"> -->
-				<!-- 장소, 찜, 예약 리스트 드롭박스 -->
-				<!-- 장소리스트 -->
+				<input type="hidden"  id="placeListOp2" class="dropdown-item" th:value="${place_list}">
+				장소, 찜, 예약 리스트 드롭박스
+				장소리스트
 				<div class="btn-group">
  					<button id="btnPlace" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">장소 선택</button>
   					<ul size="5" id="placeList" class="dropdown-menu">
@@ -284,6 +371,9 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
   					<li  id="rsvListOp" class="dropdown-item" th:each="r:${reservation}" th:value="${r.place.place_num}" th:text="${r.place.place_name}">
   					</ul>
 				</div>
+=======
+				<input type="text" name="plan_flow_name" th:value="${plan_flow_name}" id="flowText">
+>>>>>>> branch 'main' of https://github.com/yanapang/sist-ddobaki.git -->
 			</div><!-- input-group 끝 -->
 		</div><!-- input_box 끝 -->
 		

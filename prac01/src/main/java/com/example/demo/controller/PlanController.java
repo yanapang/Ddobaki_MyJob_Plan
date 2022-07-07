@@ -110,7 +110,7 @@ public class PlanController {
 	
 	//------------------------- 입력 및 수정 --------------------------------
 	
-	@GetMapping("/insertPlan/{user_num}") //플랜 입력창으로 이동.
+	@GetMapping("/insertPlan/{user_num}") //플랜 입력창으로 이동
 	public String insert(Model model, @PathVariable int user_num) {
 		//유저 번호를 함께 입력 받아 해당 유저 정보 model에유지.
 		//로그인 구현 후 httpSession에 담긴 값을 활용할 예정. 
