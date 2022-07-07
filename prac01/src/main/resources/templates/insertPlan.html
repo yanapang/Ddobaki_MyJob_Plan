@@ -56,6 +56,8 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 		var plan_num = $("#plannum").val(); //플랜넘버 타임리프로 가져온값 가져옴
 		console.log("plan_num: "+plan_num);
 		var placelist;
+		
+		//유저의 플랜 가져오기
 		$.ajax({
 			url:"/findByUserNum",
 			data:{user_num: user_num},
@@ -70,6 +72,23 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 				} 
 			}
 		});
+		
+		//Place 전체 리스트 가져오기
+		var placeAll;
+		$.ajax({
+			url:"/listPlace",
+			success:function(data){
+				placeAll = data;
+				console.log(placeAll);
+				/* for(i=0; i<placeAll.length; i++){
+					var li = $("<li></li>");
+					$("#placeListUl").append($(li).html(list[i].place_name).attr({
+						value: list[i].place_num,
+					}));
+				}  */
+			}
+		})
+		
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = { 
 		    center: new kakao.maps.LatLng(37.556317, 126.922713), // 지도의 중심좌표
@@ -121,24 +140,58 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
  			});
  			var btn1 = $("<button></button>").attr({
  				id: "btnPlace",
- 				class: "placeList btn btn-dark",
+ 				class: "btn btn-secondary btn-sm dropdown-toggle data-bs-toggle dropdown",
  				type: "button",
  			}).append("<html>", "Place");
  			var btn2 = $("<button></button>").attr({
  				id: "btnDibs",
- 				class: "placeList btn btn-dark",
+ 				class: "btn btn-secondary btn-sm dropdown-toggle",
  				type: "button",
  			}).append("<html>", "찜");
  			var btn3 = $("<button></button>").attr({
  				id: "btnRsv",
- 				class: "placeList btn btn-dark",
+ 				class: "btn btn-secondary btn-sm dropdown-toggle",
  				type: "button",
  			}).append("<html>", "예약");
  			var btn4 = $("<button></button>").attr({
  				id: "btnDel",
- 				class: "placeList btn btn-dark",
+ 				class: "btn btn-secondary btn-sm",
  				type: "button",
  			}).append("<html>", "X");
+ 			
+ 			
+ 		/* 	var ul1 = $("<ul></ul>").attr({
+ 				size:5,
+ 				id: "placeListUl",
+ 				class:"dropdown-menu"
+ 			})
+ 			
+ 			
+ 			var li1 = $("<li></li>").attr({
+ 				id: "placeListOp",
+				class: "dropdown-item",
+ 			})
+ 			 */
+
+ 			
+ 			
+ 			/* var placeListTest = $("#placeListOp2").val();
+ 			console.log(placeListTest); */
+/* <button id="btnPlace" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">장소 선택</button>
+			<ul size="5" id="placeList" class="dropdown-menu">
+			<li  id="placeListOp" class="dropdown-item" th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}">
+			</ul>
+			<button id="btnDibs" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">찜 리스트</button>
+			<ul id="dibsList" class="dropdown-menu">
+			<li  id="dibsListOp" class="dropdown-item" th:each="d:${dibs}" th:value="${d.place.place_num}" th:text="${d.place.place_name}">
+			</ul>
+			<button id="btnRsv" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">예약 리스트</button>
+			<ul id="rsvList" class="dropdown-menu">
+			<li  id="rsvListOp" class="dropdown-item" th:each="r:${reservation}" th:value="${r.place.place_num}" th:text="${r.place.place_name}">
+			</ul>
+	*/
+ 			
+ 			
  			
  			$("#inputAppend").append(str.append(btn1,btn2,btn3,btn4));
  			
@@ -214,7 +267,9 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 				<div id="inputAppend"></div>
 				<br>
 				<input type="text" name="plan_flow_name" th:value="${plan_flow_name}" id="flowText">
+				<!-- <input type="hidden"  id="placeListOp2" class="dropdown-item" th:value="${place_list}"> -->
 				<!-- 장소, 찜, 예약 리스트 드롭박스 -->
+				<!-- 장소리스트 -->
 				<div class="btn-group">
  					<button id="btnPlace" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">장소 선택</button>
   					<ul size="5" id="placeList" class="dropdown-menu">
