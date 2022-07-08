@@ -1,17 +1,19 @@
-/*  			var btn1 = $('<button </button>').attr({
- 				id: "btnPlace",
- 				class: "btn btn-secondary btn-sm dropdown-toggle",
- 				type: "button",
-////////-----------------
- 			}); */
+
+/*  			
+	var btn1 = $('<button </button>').attr({
+		id: "btnPlace",
+		class: "btn btn-secondary btn-sm dropdown-toggle",
+		type: "button",
+	});
  			
- 			
-/*  			var btn1 = $('<button data-bs-toggle="dropdown" aria-expanded="false">place</button>').attr({
- 				class: "",
- 				id: "btnPlace",
- 				type: "button",
- 			}); */
- 			/* btn1 = $('<button data-bs-auto-close="true" >place</button>').attr({ */
+	
+	var btn1 = $('<button data-bs-toggle="dropdown" aria-expanded="false">place</button>').attr({
+		class: "",
+		id: "btnPlace",
+		type: "button",
+	});
+ 	//btn1 = $('<button data-bs-auto-close="true" >place</button>').attr({ 
+	
 	btn1 = $('<button >place</button>').attr({
 		class: "btn btn-default dropdown-toggle",
 		id: "btnPlace"+cnt,
@@ -84,3 +86,5 @@
  			var text = $(this).text();
  			$("#flowText").attr({value:text});
  		});
+ 		
+ */
