@@ -27,8 +27,14 @@
 			url:"/findByUserNum",
 			data:{user_num: user_num},
 			success:function(list){
-				placelist=list;
 				console.log(list);	
+				for(i=0; i<list.length; i++)
+				{
+					var option = $("<option></option>");
+					$("#planList").append($(option).html(list[i].plan_name)).attr({
+						value : list[i].plan_num
+					});
+				}
 			}
 		});
 		
@@ -79,10 +85,9 @@
  			$("#btnGrpAdd").show();
  		});
  		
- 		$(".planGroupOp").on("click", function(){
-  			var text = $(this).attr('text').val();
-  			console.log("hi");
-  			$("#planGroupTxt").attr({value:text});
+ 		$("#planList").on("change", function(){
+  			var text = $("#planList option:selected").text();
+  			$("#planText").attr({value:text});
  		}); 
  		
  		$("#AddPlan").on("click", function(){
@@ -97,9 +102,8 @@
  				name: "plan_name",
  				class: "input-group div mb-1"
  			}).append(input);
-
+ 			
  			$("#inputAppend").append(str);
-
  		})
 	});
 	
@@ -140,7 +144,21 @@
 	     	<!-- 여행 날짜(plan_date) -->
    			<div class="row justify-content-center date input-group-addon input-group-button">
 	     		<input type="date" name="plan_date" th:value="${plan_date}" class="col-5">
-	     		<button type="button" id="AddPlan" class="btn btn-dark col-2">동선추가</button>	
+	     		<button type="button" id="AddPlan" class="btn btn-dark col-2">동선추가</button>
+	     			<div class="btn-group">
+ 					<button id="btnPlace" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">장소 선택</button>
+  					<ul size="5" id="placeList" class="dropdown-menu">
+  					<li  id="placeListOp" class="dropdown-item" th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}">
+  					</ul>
+  					<button id="btnDibs" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">찜 리스트</button>
+  					<ul id="dibsList" class="dropdown-menu">
+  					<li  id="dibsListOp" class="dropdown-item" th:each="d:${dibs}" th:value="${d.place.place_num}" th:text="${d.place.place_name}">
+  					</ul>
+  					<button id="btnRsv" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">예약 리스트</button>
+  					<ul id="rsvList" class="dropdown-menu">
+  					<li  id="rsvListOp" class="dropdown-item" th:each="r:${reservation}" th:value="${r.place.place_num}" th:text="${r.place.place_name}">
+  					</ul>
+				</div>
      		</div>
 		<!-- 플랜 그룹 정보 -->
 		<div class="border input_box">
@@ -154,31 +172,15 @@
 			
 
 			<div class="input-group" >
-				<div id="inputAppend"></div><br>
-	<!--			<input type="text" name="plan_flow_name" th:value="${plan_flow_name}" id="flowText">
-				<input type="text"  id="placeListOp" class="dropdown-item" th:value="${place_list}">
-				장소, 찜, 예약 리스트 드롭박스
-				장소리스트 -->
-		 		<div class="btn-group">
-					<button id="btnPlace" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">장소 선택</button>
-					<ul id="placeList" class="dropdown-menu">
-					<li  id="placeListOp" class="dropdown-item" th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}">
-					</ul>
-					<button id="btnDibs" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">찜 리스트</button>
-					<ul id="dibsList" class="dropdown-menu">
-					<li  id="dibsListOp" class="dropdown-item" th:each="d:${dibs}" th:value="${d.place.place_num}" th:text="${d.place.place_name}">
-					</ul>
-					<button id="btnRsv" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">예약 리스트</button>
-					<ul id="rsvList" class="dropdown-menu">
-					<li  id="rsvListOp" class="dropdown-item" th:each="r:${reservation}" th:value="${r.place.place_num}" th:text="${r.place.place_name}">
-					</ul>
-				</div> 
-			</div>
-
-			<input type="text" name="plan_flow_name" th:value="${plan_flow_name}" id="flowText">
-
-			</div>
-		<!-- input_box 끝 -->
+				<div id="inputAppend"></div>
+				<br>
+<!-- 				<input type="text" name="plan_flow_name" th:value="${plan_flow_name}" id="flowText">
+				<input type="hidden"  id="placeListOp2" class="dropdown-item" th:value="${place_list}"> -->
+<!-- 				장소, 찜, 예약 리스트 드롭박스 -->
+<!-- 				장소리스트 -->
+<!-- 				<input type="text" name="plan_flow_name" th:value="${plan_flow_name}" id="flowText"> -->
+			</div><!-- input-group 끝 -->
+		</div><!-- input_box 끝 -->
 		
 	   <!-- 입력, 수정, 삭제 버튼위치 -->
 	 	<div class="d-flex justify-content-end btnAll"  aria-label="save, delete button">
