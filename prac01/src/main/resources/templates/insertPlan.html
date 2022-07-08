@@ -15,6 +15,8 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" th:inline="javascript" th:src="@{/js/plan.js}"></script>
 <script th:inline="javascript" type="text/javascript">
+	var flowNum = 1;
+	var flowNameId = "";
 	$(function(){
 		var user_num = $("#userNum").val(); // 실제 구현시 세션에 저장된 user_num 가져오기
 		var plan_num = $("#plannum").val(); //플랜넘버 타임리프로 가져온값 가져옴
@@ -55,20 +57,36 @@
  		$("#planList").on("change", function(){
   			var text = $("#planList option:selected").text();
   			$("#planText").attr({value:text});
- 		}); 
+ 		});
+ 		
+ 		$("#placeList > li").on("click", function(){
+ 			text = $(this).text();
+ 			$("#"+flowNameId).attr({value:text})
+ 		})
  		
  		$("#AddPlan").on("click", function(){
  			
- 			var input = $("<input>").attr({
+ 			var inputFlowNum = $("<span><span>").attr({
+ 				id:"flowNum"+cnt++,
+ 				class: "form-control flowNum"
+ 			}).html(flowNum++)
+ 			
+ 			var inputFlowName = $("<input onclick='selectFlowName(this)'>").attr({
  				id: "flowText"+cnt++,
  				type: "text",
  				class :"form-control flowText"
 			});
  			
+ 			var delBtn = $("<button onclick='del(this)'>x</button>").attr({
+ 				id:"btnDel"+cnt++,
+ 				type:"button",
+ 				class:"btn btn-dark btnDel"
+ 			});
+ 			
  			var str = $("<div></div>").attr({
  				name: "plan_name",
  				class: "input-group div mb-1"
- 			}).append(input);
+ 			}).append(inputFlowNum,inputFlowName,delBtn);
  			
  			$("#inputAppend").append(str);
  		})
@@ -76,6 +94,15 @@
  		
  		
 	});
+	
+	function del(id){
+		 $(id).parent("div").remove();
+		 flowNum--;
+	}
+	
+	function selectFlowName(name){
+		flowNameId = name.id;
+	}
 	
 </script>
 </head>
