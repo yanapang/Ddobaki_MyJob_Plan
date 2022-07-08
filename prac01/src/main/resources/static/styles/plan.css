@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+#map {
+	height:70vh;
+	margin:3px;
+	border:3px;
+}
+
+.grpNum {
+	width: 40vw;
+	margin-left: 25%;
+	padding:1%;
+}
+.input_box{
+	height: 60vh;
+	overflow: auto;
+}
+.date, .input_box, .btnAll {
+	padding:1.5%;
+}
+ #inputAppend {
+	width:100%;
+	
+	position: relative;
+} 
+.input-group div input{
+	justify-content: center;
+	width: 65%;	
+} 
+.input-group div{
+	/* background-color: red; */
+	padding: 5px;
+}
+btn {
+	size: small;
+}
+.dropdown {
+	height: 10vh;
+	overflow: auto;
+}

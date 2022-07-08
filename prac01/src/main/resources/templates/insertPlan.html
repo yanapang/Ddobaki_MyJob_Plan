@@ -1,64 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
 <head>
-<title>Insert title here</title>
+<title> Plan Your Trip! </title>
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bf5eb602e7479411ca85be04bd126fbb"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-<script type="text/javascript" 
-src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></script>
-  
-<style type="text/css">
-	/* *{
-		box-sizing: border-box;
-	} */
-	#map {
-		height:70vh;
-		margin:3px;
-		border:3px;
-	}
-	
-	.grpNum {
-		width: 40vw;
-		margin-left: 25%;
-		padding:1%;
-	}
-	.input_box{
-		height: 60vh;
-		overflow: auto;
-	}
-	.date, .input_box, .btnAll {
-		padding:1.5%;
-	}
-	 #inputAppend {
-		width:100%;
-		
-		position: relative;
-	} 
-	.input-group div input{
-		justify-content: center;
-		width: 65%;	
-	} 
-	.input-group div{
-		/* background-color: red; */
-		padding: 5px;
-	}
-	btn {
-		size: small;
-	}
-	.dropdown {
-		height: 10vh;
-		overflow: auto;
-	}
-	
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+<link rel="stylesheet" th:href="@{/styles/plan.css}">
+<style type="text/css" >
 </style>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" th:inline="javascript" th:src="@{/js/plan.js}"></script>
 <script th:inline="javascript" type="text/javascript">
 	$(function(){
 		var user_num = $("#userNum").val(); // 실제 구현시 세션에 저장된 user_num 가져오기
@@ -103,15 +58,16 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 		var map = new kakao.maps.Map(mapContainer, mapOption);
 		var group_num;
 		
+		// plan_group_num & title
  		$("#btnGrpAdd").on("click", function(){
-			$("#planList").hide();
-			$("#planText").show();
+			$(".planList").hide();
+			$(".planText").show();
 			$(this).hide();
-			$("#btnGrpList").show();
+			$(".btnGrpList").show();
 			$.ajax({
 				url:"/getNextGroupNum",
 				success:function(data){
-					$("#planGrpNum").attr('value',data);
+					$(".planGrpNum").attr('value',data);
 
 				}
 			})
@@ -123,9 +79,10 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
  			$("#btnGrpAdd").show();
  		});
  		
- 		$("#planList").on("change", function(){
-  			var text = $(this).attr('value').text();
-  			$("#planText").attr({value:text});
+ 		$(".planGroupOp").on("click", function(){
+  			var text = $(this).attr('text').val();
+  			console.log("hi");
+  			$("#planGroupTxt").attr({value:text});
  		}); 
  		
  		$("#AddPlan").on("click", function(){
@@ -140,165 +97,10 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
  				name: "plan_name",
  				class: "input-group div mb-1"
  			}).append(input);
- 			
- 			
- 	 		
-/*  			var btn1 = $('<button </button>').attr({
- 				id: "btnPlace",
- 				class: "btn btn-secondary btn-sm dropdown-toggle",
- 				type: "button",
-////////-----------------
- 			}); */
- 			
- 			
-/*  			var btn1 = $('<button data-bs-toggle="dropdown" aria-expanded="false">place</button>').attr({
- 				class: "",
- 				id: "btnPlace",
- 				type: "button",
- 			}); */
- 			/* btn1 = $('<button data-bs-auto-close="true" >place</button>').attr({ */
- 			btn1 = $('<button >place</button>').attr({
- 				class: "btn btn-default dropdown-toggle",
- 				id: "btnPlace"+cnt,
- 				type: "button",
- 			}).css({
- 				class: "dropdown-toggle",
- 				"data-bs-toggle":"dropdown"
- 				"data-bs-auto-close":"true",
 
- 				"aria-expanded": "false"});
- 			
- 			var ul1 = btn1.append($('<ul id="placeList"></ul>').css("dropdown-menu"));
- 			
- 			$( btn1 ).on("click", function(){
-
- 				
- 				var li1 = ul1.empty();
- 				$.each(placeAll, function(key, value){
-	 				
- 					var addPlace = $("<li>"+value.place_name+"</li>").attr({
- 						class: "dropdown-item",
- 						value: value.place_num
- 					});
- 					
- 					ul1.append(addPlace);
-
- 					
- 					$(addPlace).on("click", function(){
-						var thisPName = value.place_name;
-						var thisPNum = value.place_num;
-						var lat = value.place_lat;
-						var lng = value.place_lng;
-			 			console.log("장소명: "+value.place_name + ", 장소번호: "+ value.place_num+", lat: "+ lat +", lng: "+lng);
-						$(this).parents(".flowText").attr({
-							value: thisPName
-						});
-						
-						
-						//$(this).parents(".flowText").attr("value", thisPName);
-			 			//$(this).options[this.selectedIndex].text
-						cnt++;
- 					})
- 				})
- 				
- 				
- 			})//btn1 끝
-/* =
-		
- 			}).after('<ul id="placeList" class="dropdown-menu"><li id="placeListOp" class="dropdown-item" th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}"></li></ul>');
-*/
- 			var btn2 = $("<button>찜</button>").attr({
- 				id: "btnDibs",
- 				class: "btn btn-secondary btn-sm dropdown-toggle",
- 				type: "button",
- 			}).append();
- 			var btn3 = $("<button>예약</button>").attr({
- 				id: "btnRsv",
- 				class: "btn btn-secondary btn-sm dropdown-toggle",
- 				type: "button",
- 			}).append();
- 			var btn4 = $("<button>X</button>").attr({
- 				id: "btnDel",
- 				class: "btn btn-secondary btn-sm",
- 				type: "button",
- 			})
- 			
- 			
- 		/* 	var ul1 = $("<ul></ul>").attr({
- 				size:5,
- 				id: "placeListUl",
- 				class:"dropdown-menu"
- 			})
- 			
- 			
- 			var li1 = $("<li></li>").attr({
- 				id: "placeListOp",
-				class: "dropdown-item",
- 			})
- 			 */
-
- 			
- 			
- 			/* var placeListTest = $("#placeListOp2").val();
- 			console.log(placeListTest); */
-/* <button id="btnPlace" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">장소 선택</button>
-			<ul size="5" id="placeList" class="dropdown-menu">
-			<li  id="placeListOp" class="dropdown-item" th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}">
-			</ul>
-			<button id="btnDibs" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">찜 리스트</button>
-			<ul id="dibsList" class="dropdown-menu">
-			<li  id="dibsListOp" class="dropdown-item" th:each="d:${dibs}" th:value="${d.place.place_num}" th:text="${d.place.place_name}">
-			</ul>
-			<button id="btnRsv" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">예약 리스트</button>
-			<ul id="rsvList" class="dropdown-menu">
-			<li  id="rsvListOp" class="dropdown-item" th:each="r:${reservation}" th:value="${r.place.place_num}" th:text="${r.place.place_name}">
-			</ul>
-	*/
- 			
- 			
- 			
- 			$("#inputAppend").append(str.append(ul1,btn2,btn3,btn4));
- 			
+ 			$("#inputAppend").append(str);
 
  		})
- 		
- 		
- 		$(btn1).on("click", "li", function(){
- 			console.log(li1);
- 			var text = $(this).text();
- 			console.log(text);
- 			$("#flowText").attr({value:text});
- 		});
- 		
- 		$("#dibsList > li").on("click", function(){
- 			var text = $(this).text();
- 			$("#flowText").attr({value:text});
- 		});
- 		
- 		$("#rsvList > li").on("click", function(){
- 			var text = $(this).text();
- 			$("#flowText").attr({value:text});
- 		});
-
-
- 
-
-/* 		<div class="btn-group">
-			<button id="btnPlace" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">장소 선택</button>
-			<ul id="placeList" class="dropdown-menu">
-			<li  id="placeListOp" class="dropdown-item" th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}">
-			</ul>
-			<button id="btnDibs" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">찜 리스트</button>
-			<ul id="dibsList" class="dropdown-menu">
-			<li  id="dibsListOp" class="dropdown-item" th:each="d:${dibs}" th:value="${d.place.place_num}" th:text="${d.place.place_name}">
-			</ul>
-			<button id="btnRsv" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">예약 리스트</button>
-			<ul id="rsvList" class="dropdown-menu">
-			<li  id="rsvListOp" class="dropdown-item" th:each="r:${reservation}" th:value="${r.place.place_num}" th:text="${r.place.place_name}">
-			</ul>
-	</div> */
- 		
-
 	});
 	
 </script>
@@ -313,10 +115,13 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
      <div class="form-inline">
 		<!-- 여행 타이틀 (plan_group_num) -->
 		<div class="input-group grpNum">
-			<input style="display: none" id="planText" type="text" class="form-control" name="plan_name">
-			<select id="planList" name="plan_group_num" class="form-select" aria-label="select-plan-group">
+			<input style="display: none" id="planText" type="text" class="form-control planGroupTxt" name="plan_name">
+			<select id="planList" name="plan_group_num" class="form-select planGroupOpGrp" aria-label="select-plan-group">
 				<option selected disabled>여행 계획 선택</option>
+				<option th:each="pl:${plan_list}" th:value="${pl.plan_group_num}" th:text="${pl.plan_name}" class="planGroupOp"></option>
 			</select>
+			
+			
 		<!-- 플랜 그룹 넘버(plan_group_num) : <input type="number" name="plan_group_num" th:value="${groupnum}"><br>
 			플랜 그룹 이름(plan_name) : <input type="text" name="plan_name" th:value="${plan_name}"><br> -->
 			<div class="input-group-addon input-group-button">
@@ -335,8 +140,7 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 	     	<!-- 여행 날짜(plan_date) -->
    			<div class="row justify-content-center date input-group-addon input-group-button">
 	     		<input type="date" name="plan_date" th:value="${plan_date}" class="col-5">
-	     		<button type="button" id="AddPlan" class="btn btn-dark col-2">동선추가</button>
-	     		
+	     		<button type="button" id="AddPlan" class="btn btn-dark col-2">동선추가</button>	
      		</div>
 		<!-- 플랜 그룹 정보 -->
 		<div class="border input_box">
@@ -350,32 +154,31 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></
 			
 
 			<div class="input-group" >
-				<div id="inputAppend"></div>
-				<br>
-<!-- <<<<<<< HEAD
-				<input type="text" name="plan_flow_name" th:value="${plan_flow_name}" id="flowText">
-				<input type="hidden"  id="placeListOp2" class="dropdown-item" th:value="${place_list}">
+				<div id="inputAppend"></div><br>
+	<!--			<input type="text" name="plan_flow_name" th:value="${plan_flow_name}" id="flowText">
+				<input type="text"  id="placeListOp" class="dropdown-item" th:value="${place_list}">
 				장소, 찜, 예약 리스트 드롭박스
-				장소리스트
-				<div class="btn-group">
- 					<button id="btnPlace" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">장소 선택</button>
-  					<ul size="5" id="placeList" class="dropdown-menu">
-  					<li  id="placeListOp" class="dropdown-item" th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}">
-  					</ul>
-  					<button id="btnDibs" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">찜 리스트</button>
-  					<ul id="dibsList" class="dropdown-menu">
-  					<li  id="dibsListOp" class="dropdown-item" th:each="d:${dibs}" th:value="${d.place.place_num}" th:text="${d.place.place_name}">
-  					</ul>
-  					<button id="btnRsv" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">예약 리스트</button>
-  					<ul id="rsvList" class="dropdown-menu">
-  					<li  id="rsvListOp" class="dropdown-item" th:each="r:${reservation}" th:value="${r.place.place_num}" th:text="${r.place.place_name}">
-  					</ul>
-				</div>
-=======
-				<input type="text" name="plan_flow_name" th:value="${plan_flow_name}" id="flowText">
->>>>>>> branch 'main' of https://github.com/yanapang/sist-ddobaki.git -->
-			</div><!-- input-group 끝 -->
-		</div><!-- input_box 끝 -->
+				장소리스트 -->
+		 		<div class="btn-group">
+					<button id="btnPlace" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">장소 선택</button>
+					<ul id="placeList" class="dropdown-menu">
+					<li  id="placeListOp" class="dropdown-item" th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}">
+					</ul>
+					<button id="btnDibs" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">찜 리스트</button>
+					<ul id="dibsList" class="dropdown-menu">
+					<li  id="dibsListOp" class="dropdown-item" th:each="d:${dibs}" th:value="${d.place.place_num}" th:text="${d.place.place_name}">
+					</ul>
+					<button id="btnRsv" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">예약 리스트</button>
+					<ul id="rsvList" class="dropdown-menu">
+					<li  id="rsvListOp" class="dropdown-item" th:each="r:${reservation}" th:value="${r.place.place_num}" th:text="${r.place.place_name}">
+					</ul>
+				</div> 
+			</div>
+
+			<input type="text" name="plan_flow_name" th:value="${plan_flow_name}" id="flowText">
+
+			</div>
+		<!-- input_box 끝 -->
 		
 	   <!-- 입력, 수정, 삭제 버튼위치 -->
 	 	<div class="d-flex justify-content-end btnAll"  aria-label="save, delete button">
