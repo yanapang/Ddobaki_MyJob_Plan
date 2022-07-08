@@ -17,6 +17,8 @@
 <script th:inline="javascript" type="text/javascript">
 	var flowNum = 1;
 	var flowNameId = "";
+	var placeLat=0;
+	var placeLng=0;
 	$(function(){
 		var user_num = $("#userNum").val(); // 실제 구현시 세션에 저장된 user_num 가져오기
 		var plan_num = $("#plannum").val(); //플랜넘버 타임리프로 가져온값 가져옴
@@ -61,6 +63,7 @@
  		
  		$("#placeList > li").on("click", function(){
  			text = $(this).text();
+ 			placeLatLng($(this).val());
  			$("#"+flowNameId).attr({value:text})
  		})
  		
@@ -90,7 +93,16 @@
  			
  			$("#inputAppend").append(str);
  		})
- 		
+ 		function placeLatLng(placeNum){
+ 			$.ajax({
+ 				url:"/getPlace",
+ 				data:{place_num:placeNum},
+ 				success:function(data){
+ 					placeLat = data.place_lat;
+ 					placeLng = data.place_lng;
+ 				}
+ 			})
+ 		}
  		
  		
 	});
