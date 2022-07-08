@@ -4,6 +4,7 @@
 	height:70vh;
 	margin:3px;
 	border:3px;
+	
 }
 
 .grpNum {
@@ -31,9 +32,6 @@
 	/* background-color: red; */
 	padding: 5px;
 }
-btn {
-	size: small;
-}
 .dropdown-menu{
 	height: 30vh;
 	overflow: auto;
@@ -41,3 +39,16 @@ btn {
 .flowNum{
 	width: 20vw;
 }
+.btnPlaceListAll{
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.btnPlaceListAll > div {
+    width: 100%;
+    display: flex;
+}
+#btnDibs, #btnPlace, #btnRsv{
+	width:100%
+}
+
+	

@@ -136,15 +136,15 @@
 	
 	<!-- 여기부터 주요 컨텐츠 -->
 	<div class="row bottom border">
-	   	<div id="map" class="col border"></div> <!-- 지도 map --> <!-- 왼쪽 -->
-	   	<div class="col right border"> <!-- 오른쪽 -->
+	   		<div id="map" class="col border rounded"></div> <!-- 지도 map --> <!-- 왼쪽 -->
+	   	<div class="col right border rounded"> <!-- 오른쪽 -->
 	   	
 	     	<!-- 여행 날짜(plan_date) -->
    			<div class="row justify-content-center date input-group-addon input-group-button">
 	     		<input type="date" name="plan_date" th:value="${plan_date}" class="col-5">
 	     		<button type="button" id="AddPlan" class="btn btn-dark col-2">동선추가</button>
-   				<div class="display:inline-block">
-	     			<div class="btn-group btn_place_list">
+   				<div class="btnPlaceListAll btn-group">
+	     			<div class="btn_place_list">
 					<button id="btnPlace" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">장소 선택</button>
 						<ul size="5" id="placeList" class="dropdown-menu">
 							<li  id="placeListOp" class="dropdown-item" th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}">
@@ -152,13 +152,13 @@
 							</li>
 						</ul>
 					</div>
-					<div class="btn-group btn_dibs_list">
-					<button id="btnDibs" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">찜 리스트</button>
+					<div class="btn_dibs_list">
+					<button id="btnDibs" class="btn btn-secondary btn-sm dropdown-toggle display:flex" type="button" data-bs-toggle="dropdown" aria-expanded="false">찜 리스트</button>
 						<ul id="dibsList" class="dropdown-menu btnDibs">
 							<li id="dibsListOp" class="dropdown-item" th:each="d:${dibs}" th:text="${d.place.place_name}" th:value="${d.place.place_num}"></li>
 						</ul>
 					</div>
-					<div class="btn-group btn_rsv_list">
+					<div class="btn_rsv_list">
 					<button id="btnRsv" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">예약 리스트</button>
 						<ul id="rsvList" class="dropdown-menu">
 							<li id="rsvListOp" class="dropdown-item" th:each="r:${reservation}" th:text="${r.place.place_name}" th:value="${r.place.place_num}" ></li>
