@@ -22,22 +22,6 @@
 		var placelist;
 		var cnt =0;
 		var btn1;
-		//유저의 플랜 가져오기
-		$.ajax({
-			url:"/findByUserNum",
-			data:{user_num: user_num},
-			success:function(list){
-				console.log(list);	
-				for(i=0; i<list.length; i++)
-				{
-					var option = $("<option></option>");
-					$("#planList").append($(option).html(list[i].plan_name)).attr({
-						value : list[i].plan_num
-					});
-				}
-			}
-		});
-		
 		//Place 전체 리스트 가져오기
 		var placeAll;
 		$.ajax({
@@ -66,10 +50,10 @@
 		
 		// plan_group_num & title
  		$("#btnGrpAdd").on("click", function(){
-			$(".planList").hide();
-			$(".planText").show();
+			$("#planList").hide();
+			$("#planText").show();
 			$(this).hide();
-			$(".btnGrpList").show();
+			$("#btnGrpList").show();
 			$.ajax({
 				url:"/getNextGroupNum",
 				success:function(data){
