@@ -19,24 +19,7 @@
 		var user_num = $("#userNum").val(); // 실제 구현시 세션에 저장된 user_num 가져오기
 		var plan_num = $("#plannum").val(); //플랜넘버 타임리프로 가져온값 가져옴
 		console.log("plan_num: "+plan_num);
-		var placelist;
 		var cnt =0;
-		var btn1;
-		//Place 전체 리스트 가져오기
-		var placeAll;
-		$.ajax({
-			url:"/listPlace",
-			success:function(data){
-				placeAll = data;
-				console.log(placeAll);
-				for(i=0; i<placeAll.length; i++){
-					var li = $("<li></li>");
-					$("#placeList").append($(li).html(placeAll[i].place_name).attr({
-						value: placeAll[i].place_num,
-					}));
-				}
-			}
-		})
 		
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = { 
@@ -89,6 +72,9 @@
  			
  			$("#inputAppend").append(str);
  		})
+ 		
+ 		
+ 		
 	});
 	
 </script>
@@ -120,6 +106,7 @@
 		</div>
 	</div> 
 	<!-- 여기까지 여행 타이틀 -->
+	
 	<!-- 여기부터 주요 컨텐츠 -->
 	<div class="row bottom border">
 	   	<div id="map" class="col border"></div> <!-- 지도 map --> <!-- 왼쪽 -->
@@ -129,40 +116,38 @@
    			<div class="row justify-content-center date input-group-addon input-group-button">
 	     		<input type="date" name="plan_date" th:value="${plan_date}" class="col-5">
 	     		<button type="button" id="AddPlan" class="btn btn-dark col-2">동선추가</button>
-	     			<div class="btn-group">
- 					<button id="btnPlace" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">장소 선택</button>
-  					<ul size="5" id="placeList" class="dropdown-menu">
-  					<li  id="placeListOp" class="dropdown-item" th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}">
-  					</ul>
-  					<button id="btnDibs" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">찜 리스트</button>
-  					<ul id="dibsList" class="dropdown-menu">
-  					<li  id="dibsListOp" class="dropdown-item" th:each="d:${dibs}" th:value="${d.place.place_num}" th:text="${d.place.place_name}">
-  					</ul>
-  					<button id="btnRsv" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">예약 리스트</button>
-  					<ul id="rsvList" class="dropdown-menu">
-  					<li  id="rsvListOp" class="dropdown-item" th:each="r:${reservation}" th:value="${r.place.place_num}" th:text="${r.place.place_name}">
-  					</ul>
-				</div>
+   				<div class="display:inline-block">
+	     			<div class="btn-group btn_place_list">
+					<button id="btnPlace" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">장소 선택</button>
+						<ul size="5" id="placeList" class="dropdown-menu">
+							<li  id="placeListOp" class="dropdown-item" th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}">
+								<span></span>
+							</li>
+						</ul>
+					</div>
+					<div class="btn-group btn_dibs_list">
+					<button id="btnDibs" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">찜 리스트</button>
+						<ul id="dibsList" class="dropdown-menu btnDibs">
+							<li id="dibsListOp" class="dropdown-item" th:each="d:${dibs}" th:text="${d.place.place_name}" th:value="${d.place.place_num}"></li>
+						</ul>
+					</div>
+					<div class="btn-group btn_rsv_list">
+					<button id="btnRsv" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">예약 리스트</button>
+						<ul id="rsvList" class="dropdown-menu">
+							<li id="rsvListOp" class="dropdown-item" th:each="r:${reservation}" th:text="${r.place.place_name}" th:value="${r.place.place_num}" ></li>
+						</ul>
+					</div>
+   				</div><!--장소, 찜, 예약 리스트 버튼그룹 div End -->
      		</div>
 		<!-- 플랜 그룹 정보 -->
 		<div class="border input_box">
-			<!-- 플랜 그룹 넘버(plan_group_num) : <input type="number" name="plan_group_num" th:value="${groupnum}"><br> -->
-			<!-- 플랜 그룹 이름(plan_name) : <input type="text" name="plan_name" th:value="${plan_name}"><br> -->
 			<!-- 유저 번호(user_num) -->
 			<input type="hidden" id="userNum" name="userinfo.user_num" th:value="${user.user_num}">
 			<!-- 여행 세부 내용 -->
-			<input id="plannum" type="hidden" name="plan_num" th:value="${plannum}">
-			<!-- pk:<span th:text="${plannum}"></span> -->
-			
+			<input id="plannum" type="hidden" name="plan_num" th:value="${plannum}">			
 
 			<div class="input-group" >
 				<div id="inputAppend"></div>
-				<br>
-<!-- 				<input type="text" name="plan_flow_name" th:value="${plan_flow_name}" id="flowText">
-				<input type="hidden"  id="placeListOp2" class="dropdown-item" th:value="${place_list}"> -->
-<!-- 				장소, 찜, 예약 리스트 드롭박스 -->
-<!-- 				장소리스트 -->
-<!-- 				<input type="text" name="plan_flow_name" th:value="${plan_flow_name}" id="flowText"> -->
 			</div><!-- input-group 끝 -->
 		</div><!-- input_box 끝 -->
 		

@@ -129,6 +129,7 @@ public class PlanController {
 		
 		//찜, 예약리스트 실어주기
 		model.addAttribute("dibs", dibsS.findByUserNum(user_num));
+		
 		model.addAttribute("reservation", resvS.findByUserNum(user_num));
 		
 		

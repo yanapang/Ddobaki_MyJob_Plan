@@ -34,7 +34,7 @@
 btn {
 	size: small;
 }
-.dropdown {
-	height: 10vh;
+.dropdown-menu{
+	height: 30vh;
 	overflow: auto;
 }
