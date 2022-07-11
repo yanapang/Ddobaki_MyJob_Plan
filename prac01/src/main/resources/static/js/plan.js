@@ -1,90 +1,163 @@
+var flowNum = 1;
+var flowNameId = "";
+var placeLat=0;
+var placeLng=0;
+var positions = [];
+	
+$(function(){
+	var user_num = $("#userNum").val(); // 실제 구현시 세션에 저장된 user_num 가져오기
+	var plan_num = $("#plannum").val(); //플랜넘버 타임리프로 가져온값 가져옴
+	console.log("plan_num: "+plan_num);
+	var flowNumCnt =0;
+	var flowNameCnt =0;
+	var placeNumCnt =0;
+	var delBtnCnt =0;
+	var group_num;
+	
+	//map 생성 
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		mapOption = { 
+		    center: new kakao.maps.LatLng(37.556317, 126.922713), // 지도의 중심좌표
+		    level: 3 // 지도의 확대 레벨
+		};
 
-/*  			
-	var btn1 = $('<button </button>').attr({
-		id: "btnPlace",
-		class: "btn btn-secondary btn-sm dropdown-toggle",
-		type: "button",
-	});
- 			
-	
-	var btn1 = $('<button data-bs-toggle="dropdown" aria-expanded="false">place</button>').attr({
-		class: "",
-		id: "btnPlace",
-		type: "button",
-	});
- 	//btn1 = $('<button data-bs-auto-close="true" >place</button>').attr({ 
-	
-	btn1 = $('<button >place</button>').attr({
-		class: "btn btn-default dropdown-toggle",
-		id: "btnPlace"+cnt,
-		type: "button",
-	}).css({
-		class: "dropdown-toggle",
-		"data-bs-toggle":"dropdown",
-		"data-bs-auto-close":"true",
-		"aria-expanded": "false"});
-	
-	var ul1 = btn1.append($('<ul id="placeList"></ul>').css("dropdown-menu"));
-	
-	$( btn1 ).on("click", function(){
-
-		var li1 = ul1.empty();
-		$.each(placeAll, function(key, value){
-			
-			var addPlace = $("<li>"+value.place_name+"</li>").attr({
-				class: "dropdown-item",
-				value: value.place_num
-			});
-			
-			ul1.append(addPlace);
-			
-			$(addPlace).on("click", function(){
-				var thisPName = value.place_name;
-				var thisPNum = value.place_num;
-				var lat = value.place_lat;
-				var lng = value.place_lng;
-	 			console.log("장소명: "+value.place_name + ", 장소번호: "+ value.place_num+", lat: "+ lat +", lng: "+lng);
-				$(this).parents(".flowText").attr({
-					value: thisPName
-				});
-				cnt++;
-			})
-		})
+	//지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+	var map = new kakao.maps.Map(mapContainer, mapOption);
 		
-	})//btn1 끝
+	// 마커 이미지의 이미지 주소.
+	var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 	
+		
+	//장소의 위도 경도 가져오는 함수.
+	function placeLatLng(placeNum){
+		$.ajax({
+			url:"/getPlace",
+			data:{place_num:placeNum},
+			success:function(data){
+				//가져온값 변수에 저장;
+				placeName = data.place_name;
+				lat = data.place_lat;
+				lng = data.place_lng;
+				
+				//카카오맵 연결을 위해 latlng 변수생성후, 새로운 LatLng 객체 생성.
+				latlng = new kakao.maps.LatLng(lat, lng);
+				
+				//여러 값 저장을 위해 positions array에 저장.
+				positions.push({title:placeName, placenum:placeNum, latlng : latlng})
+				
+				//해당위치로 지도 이동 및 마커 표출 
+				map.panTo(latlng);
+				showMarker(latlng);
+				
+				console.log(latlng);
+			}		 		
+		})
+	};
 	
-	var btn2 = $("<button>찜</button>").attr({
-		id: "btnDibs",
-		class: "btn btn-secondary btn-sm dropdown-toggle",
-		type: "button",
-	}).append();
-	var btn3 = $("<button>예약</button>").attr({
-		id: "btnRsv",
-		class: "btn btn-secondary btn-sm dropdown-toggle",
-		type: "button",
-	}).append();
-	var btn4 = $("<button>X</button>").attr({
-		id: "btnDel",
-		class: "btn btn-secondary btn-sm",
-		type: "button", 
+	//카카오 맵 마커 생성 function
+ 	function showMarker(){
+		
+		for (var i = 0; i < positions.length; i++) {
+		 	
+		    // 마커 이미지의 이미지 크기 입니다
+		    var imageSize = new kakao.maps.Size(24, 35); 
+		    
+		    // 마커 이미지를 생성합니다    
+		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+		    
+		    // 마커를 생성합니다
+		    var marker = new kakao.maps.Marker({
+		        map: map, // 마커를 표시할 지도
+		        position: positions[i].latlng, // 마커를 표시할 위치
+		        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+		        image : markerImage // 마커 이미지 
+		    });
+		}
+	}
+	
+	// plan_group_num & title
+	$("#btnGrpAdd").on("click", function(){
+		$("#planList").hide();
+		$("#planText").show();
+		$(this).hide();
+		$("#btnGrpList").show();
+		$.ajax({
+			url:"/getNextGroupNum",
+			success:function(data){
+				$(".planGrpNum").attr('value',data);
+			}
+		})
+	});
+	
+	$("#btnGrpList").on("click", function(){
+		$("#planList").show();
+		$("#planText").hide();
+		$(this).hide();
+		$("#btnGrpAdd").show();
+	});
+
+	$("#planList").on("change", function(){
+		var text = $("#planList option:selected").text();
+		$("#planText").attr({value:text});
+	});
+	
+	$("#placeList > li").on("click", function(){
+		placeName = $(this).text();
+		placeNum = $(this).val();
+		$("#"+flowNameId).attr({value:placeName});
+		$("#"+flowNameId).next().val(placeNum);
+		placeLatLng(placeNum);
+	});
+	
+	$("#AddPlan").on("click", function(){
+		
+		var inputFlowNum = $("<div name='plan_flow_num'></div>").attr({
+			id:"flowNum"+flowNumCnt++,
+			class: "form-control flowNum",
+			style: "text-align:center"
+		}).html(flowNum++)
+		
+		var inputFlowName = $("<input name='plan_flow_name' onclick='selectFlowName(this)'>").attr({
+			id: "flowText"+flowNameCnt++,
+			type: "text",
+			name: "plan_name",
+			class :"form-control flowText",
+			style: "width: 70%"
+		});
+ 			
+		var input_num = $("<input name='place.place_num'>").attr({
+			type: "hidden",
+			//현재 선택된 장소의 경도 위도 가져오는 함수 실행.
+		});
+ 
+		var delBtn = $("<button onclick='del(this)'>x</button>").attr({
+			id:"btnDel"+delBtnCnt++,
+			type:"button",
+			class:"btn btn-dark btnDel"
+		});
+ 			
+		var str = $("<div></div>").attr({
+			name: "plan_name",
+			class: "input-group div mb-1"
+		}).append(inputFlowNum,inputFlowName,input_num,delBtn);
+
+ 			
+		$("#inputAppend").append(str);
+ 			
+	})
+ 		
+	//동선입력에 변경이 생기면 새로 번호 부여 및 지도 새로 표시
+	$("#inputAppend").on("change", function(){
 		
 	})
 	
-	$(btn1).on("click", "li", function(){
- 			console.log(li1);
- 			var text = $(this).text();
- 			console.log(text);
- 			$("#flowText").attr({value:text});
- 		});
- 		
- 	$("#dibsList > li").on("click", function(){
- 			var text = $(this).text();
- 			$("#flowText").attr({value:text});
- 		});
- 		
- 		$("#rsvList > li").on("click", function(){
- 			var text = $(this).text();
- 			$("#flowText").attr({value:text});
- 		});
- 		
- */
+})
+ 	
+function del(id){
+	 $(id).parent("div").remove();
+	 flowNum--;
+}
+
+function selectFlowName(name){
+	flowNameId = name.id;
+	console.log(name.id);
+}
