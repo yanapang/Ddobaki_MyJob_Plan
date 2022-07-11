@@ -25,7 +25,10 @@
 		var user_num = $("#userNum").val(); // 실제 구현시 세션에 저장된 user_num 가져오기
 		var plan_num = $("#plannum").val(); //플랜넘버 타임리프로 가져온값 가져옴
 		console.log("plan_num: "+plan_num);
-		var cnt =0;
+		var flowNumCnt =0;
+		var flowNameCnt =0;
+		var placeNumCnt =0;
+		var delBtnCnt =0;
 		
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = { 
@@ -64,37 +67,45 @@
  		});
  		
  		$("#placeList > li").on("click", function(){
- 			text = $(this).text();
- 			placeLatLng($(this).val());
- 			$("#"+flowNameId).attr({value:text})
- 		})
+ 			placeName = $(this).text();
+ 			placeNum = $(this).val();
+ 			$("#"+flowNameId).attr({value:placeName});
+ 			$("#"+flowNameId).next().val(placeNum);
+ 		});
  		
  		$("#AddPlan").on("click", function(){
  			
- 			var inputFlowNum = $("<div></div>").attr({
- 				id:"flowNum"+cnt++,
- 				/*class: " flowNum inline-block justify-content-end",*/
- 				class: "form-control flowNum flowNum",
+ 			var inputFlowNum = $("<div name='plan_flow_num'></div>").attr({
+ 				id:"flowNum"+flowNumCnt++,
+ 				class: "form-control flowNum",
  				style: "text-align:center"
  			}).html(flowNum++)
  			
- 			var inputFlowName = $("<input onclick='selectFlowName(this)'>").attr({
- 				id: "flowText"+cnt++,
+ 			var inputFlowName = $("<input name='plan_flow_name' onclick='selectFlowName(this)'>").attr({
+ 				id: "flowText"+flowNameCnt++,
  				type: "text",
  				name: "plan_name",
  				class :"form-control flowText",
  				style: "width: 70%"
 			});
  			
+ 			var input_num = $("<input name='place.place_num'>").attr({
+ 				type: "hidden"
+			});
+ 
+ 			
  			var delBtn = $("<button onclick='del(this)'>x</button>").attr({
- 				id:"btnDel"+cnt++,
+ 				id:"btnDel"+delBtnCnt++,
  				type:"button",
  				class:"btn btn-dark btnDel"
  			});
  			
  			var str = $("<div></div>").attr({
- 				class: "input-group div "
- 			}).append(inputFlowNum, inputFlowName, delBtn);
+
+ 				name: "plan_name",
+ 				class: "input-group div mb-1"
+ 			}).append(inputFlowNum,inputFlowName,input_num,delBtn);
+
  			
  			$("#inputAppend").append(str);
  			
@@ -159,9 +170,9 @@
 	
 	function selectFlowName(name){
 		flowNameId = name.id;
+		console.log(name.id);
 	}
 
- 
 </script>
 </head>
 <body>
@@ -204,7 +215,7 @@
    				<div class="btnPlaceListAll btn-group">
 	     			<div class="btn_place_list">
 					<button id="btnPlace" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">장소 선택</button>
-						<ul size="5" id="placeList" class="dropdown-menu">
+						<ul id="placeList" class="dropdown-menu">
 							<li  id="placeListOp" class="dropdown-item" th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}">
 								<span></span>
 							</li>
