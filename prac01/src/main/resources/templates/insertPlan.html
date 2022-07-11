@@ -19,6 +19,8 @@
 	var flowNameId = "";
 	var placeLat=0;
 	var placeLng=0;
+	var positions = [];
+	
 	$(function(){
 		var user_num = $("#userNum").val(); // 실제 구현시 세션에 저장된 user_num 가져오기
 		var plan_num = $("#plannum").val(); //플랜넘버 타임리프로 가져온값 가져옴
@@ -69,15 +71,19 @@
  		
  		$("#AddPlan").on("click", function(){
  			
- 			var inputFlowNum = $("<span><span>").attr({
+ 			var inputFlowNum = $("<div></div>").attr({
  				id:"flowNum"+cnt++,
- 				class: "form-control flowNum"
+ 				/*class: " flowNum inline-block justify-content-end",*/
+ 				class: "form-control flowNum flowNum",
+ 				style: "text-align:center"
  			}).html(flowNum++)
  			
  			var inputFlowName = $("<input onclick='selectFlowName(this)'>").attr({
  				id: "flowText"+cnt++,
  				type: "text",
- 				class :"form-control flowText"
+ 				name: "plan_name",
+ 				class :"form-control flowText",
+ 				style: "width: 70%"
 			});
  			
  			var delBtn = $("<button onclick='del(this)'>x</button>").attr({
@@ -87,26 +93,65 @@
  			});
  			
  			var str = $("<div></div>").attr({
- 				name: "plan_name",
- 				class: "input-group div mb-1"
- 			}).append(inputFlowNum,inputFlowName,delBtn);
+ 				class: "input-group div "
+ 			}).append(inputFlowNum, inputFlowName, delBtn);
  			
  			$("#inputAppend").append(str);
+ 			
  		})
- 		function placeLatLng(placeNum){
- 			$.ajax({
- 				url:"/getPlace",
- 				data:{place_num:placeNum},
- 				success:function(data){
- 					placeLat = data.place_lat;
- 					placeLng = data.place_lng;
- 				}
- 			})
- 		}
  		
+ 		//현재 선택된 장소의 경도 위도 가져오는 함수 실행.
+ 		placeLatLng(placeNum);
  		
-	});
+ 		// 마커 이미지의 이미지 주소입니다
+	var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+ 		
 	
+	//장소의 위도 경도 가져오는 함수.
+	function placeLatLng(placeNum){
+		$.ajax({
+			url:"/getPlace",
+			data:{place_num:placeNum},
+			success:function(data){
+				placeName = data.place_name;
+				lat = data.place_lat;
+				lng = data.place_lng;
+				positions.push({content: '<div>'+placeName+'</div>', placenum:placeNum, /*lat:placeLat, lng: placeLng*/
+					 latlng : new kakao.maps.LatLng(lat, lng),
+				})
+				console.log(positions[0].latlng)
+				
+			}
+	 		//전체 place경도위도 placeArr에 객체로 저장됨.  
+		})
+	 	
+	};
+	//카카오 맵 마커 생성
+ 	function showMarker(){
+		for (var i = 0; i < positions.length; i ++) {
+		 	
+		    // 마커 이미지의 이미지 크기 입니다
+		    var imageSize = new kakao.maps.Size(24, 35); 
+		    
+		    // 마커 이미지를 생성합니다    
+		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+		    
+		    // 마커를 생성합니다
+		    var marker = new kakao.maps.Marker({
+		        map: map, // 마커를 표시할 지도
+		        position: position[i].latlng, // 마커를 표시할 위치
+		       // title : positions[i].content, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+		        image : markerImage // 마커 이미지 
+		    });
+
+		}
+	
+	}
+	
+})
+ 	
+ 	
+ 	
 	function del(id){
 		 $(id).parent("div").remove();
 		 flowNum--;
@@ -115,7 +160,8 @@
 	function selectFlowName(name){
 		flowNameId = name.id;
 	}
-	
+
+ 
 </script>
 </head>
 <body>
@@ -195,7 +241,7 @@
 		  <button id="btnSubmit" type="submit" class="btn btn-dark">수정/저장</button>
 		  <button type="reset" class="btn btn-dark"> 리셋</button>
 		  <button id="btnDelete" type="button" class="btn btn-dark">삭제</button>
-		</div>
+		</div>		
  	 </div><!-- 오른쪽 박스 끝 -->
   	 </div><!-- bottom 박스 끝 -->
 	</form>
