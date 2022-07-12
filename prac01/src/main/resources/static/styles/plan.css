@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+/* main */
 #map {
 	height:70vh;
 	margin:3px;
@@ -21,7 +22,6 @@
 }
  #inputAppend {
 	width:100%;
-	
 	position: relative;
 } 
 .input-group div input{
@@ -32,7 +32,7 @@
 	/* background-color: red; */
 	padding: 5px;
 }
-.dropdown-menu{
+.dropdown{
 	height: 30vh;
 	overflow: auto;
 }

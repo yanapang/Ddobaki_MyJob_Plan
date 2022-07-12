@@ -1,0 +1,31 @@
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!--headerFragment 선언-->
+<header th:fragment="headerFragment">
+		<nav class="navbar">
+			<ul class="navbar_user">
+				<li><a href="">My Page</a></li>
+				<li><a href="">Log In</a></li>
+				<li><a href="">Register</a></li>
+			</ul>
+			<div class="navbar_logo">
+				<a href="">logo here</a>
+			</div>
+			<ul class="navbar_menu">
+				<li><a href="">Home</a></li>
+				<li><a href="">Place</a></li>
+				<li><a href="">Travel</a></li>
+				<li><a th:href="@{/insertPlan}+${'/'+user_num}">Plan</a></li>
+				<li class="board"><a href="">Board</a>
+					<ul class="navbar_menu_board dropdown-menu">
+						<li><a href="">Notice</a></li>
+						<li><a href="">Community</a></li>
+						<li><a href="">Review</a></li>
+						<li><a href="">FAQ</a></li>
+					</ul>
+				</li>
+				<li><a href="">Our Team</a></li>
+			</ul>
+		</nav>
+	</header>
+</html>
