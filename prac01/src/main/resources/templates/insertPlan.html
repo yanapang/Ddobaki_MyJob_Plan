@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+<link rel="stylesheet" th:href="@{/styles/common.css}">
 <link rel="stylesheet" th:href="@{/styles/plan.css}">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d2b656d20ccafdc06e8cff4e6a7e35ef"></script>
@@ -17,33 +18,10 @@
 </script>
 </head>
 <body>
-	<header>
-		<nav class="navbar">
-			<ul class="navbar_user">
-				<li><a href="">My Page</a></li>
-				<li><a href="">Log In</a></li>
-				<li><a href="">Register</a></li>
-			</ul>
-			<div class="navbar_logo">
-				<a href="">logo here</a>
-			</div>
-			<ul class="navbar_menu">
-				<li><a href="">Home</a></li>
-				<li><a href="">Place</a></li>
-				<li><a href="">Travel</a></li>
-				<li><a th:href="@{/insertPlan}+${'/'+user_num}">Plan</a></li>
-				<li class="board"><a href="">Board</a>
-					<ul class="navbar_menu_board dropdown-menu">
-						<li><a href="">Notice</a></li>
-						<li><a href="">Community</a></li>
-						<li><a href="">Review</a></li>
-						<li><a href="">FAQ</a></li>
-					</ul>
-				</li>
-				<li><a href="">Our Team</a></li>
-			</ul>
-		</nav>
-	</header>
+
+<!-- header fragment 사용 -->
+<th:block th:replace="fragments/header :: headerFragment"></th:block>
+	
 <!--<h3>PLAN</h3><hr>-->
 <div class="container border">
     <form action="/savePlan" method="post">
@@ -80,7 +58,7 @@
    				<div class="btnPlaceListAll btn-group">
 	     			<div class="btn_place_list">
 					<button id="btnPlace" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">장소 선택</button>
-						<ul id="placeList" class="dropdown-menu">
+						<ul id="placeList" class="dropdown-menu dropdown">
 							<li  id="placeListOp" class="dropdown-item" th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}">
 								<span></span>
 							</li>
@@ -88,13 +66,13 @@
 					</div>
 					<div class="btn_dibs_list">
 					<button id="btnDibs" class="btn btn-secondary btn-sm dropdown-toggle display:flex" type="button" data-bs-toggle="dropdown" aria-expanded="false">찜 리스트</button>
-						<ul id="dibsList" class="dropdown-menu btnDibs">
+						<ul id="dibsList" class="dropdown-menu btnDibs dropdown">
 							<li id="dibsListOp" class="dropdown-item" th:each="d:${dibs}" th:text="${d.place.place_name}" th:value="${d.place.place_num}"></li>
 						</ul>
 					</div>
 					<div class="btn_rsv_list">
 					<button id="btnRsv" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">예약 리스트</button>
-						<ul id="rsvList" class="dropdown-menu">
+						<ul id="rsvList" class="dropdown-menu dropdown">
 							<li id="rsvListOp" class="dropdown-item" th:each="r:${reservation}" th:text="${r.place.place_name}" th:value="${r.place.place_num}" ></li>
 						</ul>
 					</div>
@@ -122,14 +100,9 @@
   	 </div><!-- bottom 박스 끝 -->
 	</form>
 </div> <!-- 전체 컨테이너 끝-->
-<footer>
-	<div class="footer_contact">
-		<ul>Contact US
-			<li><a href="">Github</a></li>
-			<li><a href="">Instagram</a></li>
-			<li><a href="">Call</a></li>
-		</ul>
-	</div>
-</footer>
+
+<!-- footer fragment 사용 -->
+<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+
 </body>
 </html>
