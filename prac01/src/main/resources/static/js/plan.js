@@ -77,6 +77,7 @@ $(function(){
 	
 	// plan_group_num & title
 	$("#btnGrpAdd").on("click", function(){
+		$("#planList option:eq(0)").prop("selected", true);
 		$("#planList").hide();
 		$("#planText").show();
 		$(this).hide();
@@ -84,7 +85,7 @@ $(function(){
 		$.ajax({
 			url:"/getNextGroupNum",
 			success:function(data){
-				$(".planGrpNum").attr('value',data);
+				$("#planGrpNum").attr('value',data);
 			}
 		})
 	});
@@ -97,6 +98,8 @@ $(function(){
 	});
 
 	$("#planList").on("change", function(){
+		var plGrpnum = $("#planList option:selected").val();
+		$("#planGrpNum").val(plGrpnum);
 		$("#planText").val("");
 		var text = $("#planList option:selected").text();
 		$("#planText").val(text);
