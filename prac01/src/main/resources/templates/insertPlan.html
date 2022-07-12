@@ -114,8 +114,9 @@
  		});
  		
  		$("#planList").on("change", function(){
+ 			$("#planText").val("");
   			var text = $("#planList option:selected").text();
-  			$("#planText").attr({value:text});
+  			$("#planText").val(text);
  		});
  		
  		$("#placeList > li").on("click", function(){
@@ -137,7 +138,6 @@
  			var inputFlowName = $("<input name='plan_flow_name' onclick='selectFlowName(this)'>").attr({
  				id: "flowText"+flowNameCnt++,
  				type: "text",
- 				name: "plan_name",
  				class :"form-control flowText",
  				style: "width: 70%"
 			});
