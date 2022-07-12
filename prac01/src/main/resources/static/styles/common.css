@@ -26,11 +26,15 @@ a {
 }
 .navbar_logo{
 	display:flex;
-	height:10vh;
+	height:20vh;
 	width:100%;
 	justify-content: center;
-	
 }
+.logo {
+	display:flex;
+	height: 20vh;
+}
+
 .navbar_menu{
 	display:flex;
 	width:100%;
@@ -39,7 +43,7 @@ a {
 	justify-content: center;
 	background-color: #6bba62;
 	margin:0;
-	
+	border-radius: 10px;
 }
 .navbar_menu li{
 	padding: 8px 20px; 	

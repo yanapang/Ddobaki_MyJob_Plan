@@ -1,11 +1,14 @@
 @charset "UTF-8";
 
 /* main */
+.container{
+	border-radius: 10px;
+}
+
 #map {
 	height:70vh;
 	margin:3px;
 	border:3px;
-	
 }
 
 .grpNum {
@@ -29,7 +32,6 @@
 	width: 75%;	
 } 
 .input-group div{
-	/* background-color: red; */
 	padding: 5px;
 }
 .dropdown{

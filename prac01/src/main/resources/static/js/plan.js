@@ -25,7 +25,7 @@ $(function(){
 	var map = new kakao.maps.Map(mapContainer, mapOption);
 		
 	// 마커 이미지의 이미지 주소.
-	var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 	
+	//var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 	
 		
 	//장소의 위도 경도 가져오는 함수.
 	function placeLatLng(placeNum){
@@ -57,12 +57,13 @@ $(function(){
  	function showMarker(){
 		
 		for (var i = 0; i < positions.length; i++) {
-		 	
-		    // 마커 이미지의 이미지 크기 입니다
-		    var imageSize = new kakao.maps.Size(24, 35); 
-		    
-		    // 마커 이미지를 생성합니다    
-		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+
+		    //
+		    var imageSrc = '/map/paws.png', // 마커이미지 주소.
+			    imageSize = new kakao.maps.Size(24, 24); // 마커이미지의 크기.
+			      
+			// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+			var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 		    
 		    // 마커를 생성합니다
 		    var marker = new kakao.maps.Marker({
@@ -144,6 +145,7 @@ $(function(){
 		$("#inputAppend").append(str);
  			
 	})
+ 		
  		
 	//동선입력에 변경이 생기면 새로 번호 부여 및 지도 새로 표시
 	$("#inputAppend").on("change", function(){

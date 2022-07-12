@@ -46,6 +46,10 @@ public interface PlanDAO extends JpaRepository<Plan, Integer> {
 	@Query("SELECT p FROM Plan p WHERE user_num=:user_num AND plan_group_num=:plan_group_num AND plan_date=:plan_date")
 	public List<Plan> findByUserNumAndGroupNumAndPlanDate(@Param("user_num") int user_num, @Param("plan_group_num") int plan_group_num, @Param("plan_date") Date plan_date);
 	
+	// -- distinct, order by 적용한 그룹 넘버 리스트 
+	//@Query("SELECT DISTINCT p.plan_group_num, p.plan_name FROM Plan p WHERE user_num=:user_num ORDER BY p.plan_group_num")
+	//public List<> findPlanGroupNum(@Param("user_num") int user_num);
+	
 	//------------------------delete-----------------------------------------
 	//delete(플랜내역하나삭제(기본제공), 날짜별삭제, 플랜 그룹삭제)
 	@Modifying

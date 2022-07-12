@@ -62,6 +62,10 @@ public class PlanService {
 		return plan_dao.findByUserNumAndGroupNumAndPlanDate(user_num, plan_group_num, plan_date);
 	}
 	
+	//------plan group num ---
+//	public List<Object[]> findPlanGroupNum(int user_num){
+//		return plan_dao.findPlanGroupNum(user_num);
+//	}
 	
 	//----------- delete ----------
 	//계획 1개 단위 삭제 (기본제공)

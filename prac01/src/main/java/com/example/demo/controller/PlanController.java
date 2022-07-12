@@ -119,6 +119,9 @@ public class PlanController {
 		//플랜과 플레이스 전체값 model로 유지.
 		model.addAttribute("plan_list", planS.findByUserNum(user_num));  
 		
+		//distinct 먹인플랜그룹리스
+//		model.addAttribute("plan_group_list", planS.findPlanGroupNum(user_num));
+		
 		//플랜은 향후 해당 유저의 플랜만 입력 뷰페이지로 보내는 방식으로 수정 예정?
 		model.addAttribute("place_list", placeS.findAll()); 
 		
