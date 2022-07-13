@@ -23,7 +23,7 @@
 	
 <!--<h3>PLAN</h3><hr>-->
 <div class="container border">
-    <form action="/savePlan" method="post">
+    <form th:action="@{/savePlan}+${'/'+user_num}" method="post">
      <div class="form-inline">
 		<!-- 여행 타이틀 (plan_group_num) -->
 		<div class="input-group grpNum">
@@ -31,7 +31,7 @@
 			<input style="display: none" id="planGrpNum"> <!--name="plan_group_num"-->
 			<select id="planList" name="plan_group_num" class="form-select planGroupOpGrp" aria-label="select-plan-group">
 				<option selected disabled>여행 계획 선택</option>
-				<option th:each="p:${plan_group_list}" th:value="${p[0]}" th:text="${p[1]}" class="planGroupOp"></option>
+				<option th:each="p:${plan_list}" th:value="${p.plan_group_num}" th:text="${p.plan_name}" class="planGroupOp"></option>
 			</select>
 			
 		<!-- 플랜 그룹 넘버(plan_group_num) : <input type="number" name="plan_group_num" th:value="${groupnum}"><br>
@@ -59,7 +59,6 @@
 					<button id="btnPlace" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">장소 선택</button>
 						<ul id="placeList" class="dropdown-menu dropdown">
 							<li  id="placeListOp" class="dropdown-item" th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}">
-								<span></span>
 							</li>
 						</ul>
 					</div>

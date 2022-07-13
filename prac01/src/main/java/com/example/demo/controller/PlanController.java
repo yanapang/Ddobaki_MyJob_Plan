@@ -27,6 +27,7 @@ import com.example.demo.service.PlanService;
 import com.example.demo.service.ReservationService;
 import com.example.demo.service.UserInfoService;
 import com.example.demo.vo.Dibs;
+import com.example.demo.vo.Place;
 import com.example.demo.vo.Plan;
 import com.example.demo.vo.Reservation;
 
@@ -142,12 +143,39 @@ public class PlanController {
 	}
 
 	
-	@PostMapping("/savePlan") //플랜 저장 
-	public ModelAndView save(PlanDTO p, RoutDTO rt) {
-		System.out.println(p);
+	@PostMapping("/savePlan/{user_num}") //플랜 저장 
+	public ModelAndView save(PlanDTO pt, RoutDTO rt, @PathVariable int user_num) {
+		System.out.println(pt);
 		//System.out.println(rt);
 		
-//		planS.save(p); //insert & update
+		Plan p= new Plan();
+		
+		System.out.println( "세팅 전: " + p+ "\n");
+		
+		//plan_group_num, plan_name, plan_date
+		p.setPlan_group_num(pt.getPlan_group_num());
+		p.setPlan_name(pt.getPlan_name());
+		p.setPlan_date(pt.getPlan_date());
+		
+		System.out.println( "세팅 중간, user_num 전: " + p+ "\n");
+		
+		//p.setUserinfo(user_num);
+		//pt.getList();
+		System.out.println( "for문 전 " + p+ "\n");
+		for (int i=0; i < pt.getList().size(); i++) {
+			System.out.println("List: "+ pt.getList()+"\n");
+			
+			//flow_num, flow_name, place
+			p.setPlace(placeS.getPlace(rt.getPlace_num()));
+			p.setPlan_flow_num(rt.getPlan_flow_num());
+			p.setPlan_flow_name(rt.getPlan_flow_name());
+			p.setPlan_num(planS.getNextPlanNum());
+			
+			System.out.println("Plan Entity : "+ p+"\n");
+			//planS.save(p); //insert & update
+		}
+		//System.out.println(p);
+		
 		ModelAndView mav = new ModelAndView(); //save 메소드 실행 후 listPlan으로 일단 리디렉션 설정.
 		mav.setView(new RedirectView("/listPlan")); //향후 해당 user_num에 따른 listPlan만 보여주게 설정할예정!
 		return mav;

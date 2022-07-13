@@ -53,7 +53,7 @@ $(function(){
 			}		 		
 		})
 	};
-	a
+	
 	//카카오 맵 마커 생성 function
  	function showMarker(){
 		
