@@ -115,11 +115,11 @@ $(function(){
 	$("#AddPlan").on("click", function(){
 		
 		console.log("i:"+i);
-		var inputFlowNum = $("<div name='list["+i+"].plan_flow_num'></div>").attr({
+		var inputFlowNum = $("<input name='list["+i+"].plan_flow_num' readonly>").attr({
 			id:"flowNum"+flowNumCnt++,
 			class: "form-control flowNum",
 			style: "text-align:center"
-		}).html(flowNum++)
+		}).val(flowNum++)
 		
 		var inputFlowName = $("<input name='list["+i+"].plan_flow_name' onclick='selectFlowName(this)'>").attr({
 			id: "flowText"+flowNameCnt++,
