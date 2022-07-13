@@ -84,11 +84,7 @@ $(function(){
 		$.ajax({
 			url:"/getNextGroupNum",
 			success:function(data){
-<<<<<<< HEAD
-				$(".planGrpNum").attr('value',data);
-=======
 				$("#plan_group_num").attr('value',data);
->>>>>>> stash
 			}
 		})
 	});
@@ -101,12 +97,9 @@ $(function(){
 	});
 
 	$("#planList").on("change", function(){
-<<<<<<< HEAD
-=======
 		var plGrpnum = $("#planList option:selected").val();
 		$("#planGrpNum").val("");
 		$("#planText").val("");
->>>>>>> stash
 		var text = $("#planList option:selected").text();
 		$("#planText").attr({value:text});
 	});
