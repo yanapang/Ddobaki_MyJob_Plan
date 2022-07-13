@@ -3,6 +3,7 @@ var flowNameId = "";
 var placeLat=0;
 var placeLng=0;
 var positions = [];
+var i=0;
 	
 $(function(){
 	var user_num = $("#userNum").val(); // 실제 구현시 세션에 저장된 user_num 가져오기
@@ -83,7 +84,11 @@ $(function(){
 		$.ajax({
 			url:"/getNextGroupNum",
 			success:function(data){
+<<<<<<< HEAD
 				$(".planGrpNum").attr('value',data);
+=======
+				$("#plan_group_num").attr('value',data);
+>>>>>>> stash
 			}
 		})
 	});
@@ -96,6 +101,12 @@ $(function(){
 	});
 
 	$("#planList").on("change", function(){
+<<<<<<< HEAD
+=======
+		var plGrpnum = $("#planList option:selected").val();
+		$("#planGrpNum").val("");
+		$("#planText").val("");
+>>>>>>> stash
 		var text = $("#planList option:selected").text();
 		$("#planText").attr({value:text});
 	});
@@ -103,20 +114,21 @@ $(function(){
 	$("#placeList > li").on("click", function(){
 		placeName = $(this).text();
 		placeNum = $(this).val();
-		$("#"+flowNameId).attr({value:placeName});
+		$("#"+flowNameId).val(placeName);
 		$("#"+flowNameId).next().val(placeNum);
 		placeLatLng(placeNum);
 	});
 	
 	$("#AddPlan").on("click", function(){
 		
-		var inputFlowNum = $("<div name='plan_flow_num'></div>").attr({
+		console.log("i:"+i);
+		var inputFlowNum = $("<div name='list["+i+"].plan_flow_num'></div>").attr({
 			id:"flowNum"+flowNumCnt++,
 			class: "form-control flowNum",
 			style: "text-align:center"
 		}).html(flowNum++)
 		
-		var inputFlowName = $("<input name='plan_flow_name' onclick='selectFlowName(this)'>").attr({
+		var inputFlowName = $("<input name='list["+i+"].plan_flow_name' onclick='selectFlowName(this)'>").attr({
 			id: "flowText"+flowNameCnt++,
 			type: "text",
 			name: "plan_name",
@@ -124,7 +136,7 @@ $(function(){
 			style: "width: 70%"
 		});
  			
-		var input_num = $("<input name='place.place_num'>").attr({
+		var input_num = $("<input name='list["+i+"].place_num'>").attr({
 			type: "hidden",
 			//현재 선택된 장소의 경도 위도 가져오는 함수 실행.
 		});
@@ -136,12 +148,12 @@ $(function(){
 		});
  			
 		var str = $("<div></div>").attr({
-			name: "plan_name",
 			class: "input-group div mb-1"
 		}).append(inputFlowNum,inputFlowName,input_num,delBtn);
 
- 			
+ 		i++;
 		$("#inputAppend").append(str);
+		
  			
 	})
  		

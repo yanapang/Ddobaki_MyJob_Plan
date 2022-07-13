@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.example.demo.dto.PlanDTO;
 import com.example.demo.service.DibsService;
 import com.example.demo.service.PlaceService;
 import com.example.demo.service.PlanService;
@@ -138,8 +139,9 @@ public class PlanController {
 
 	
 	@PostMapping("/savePlan") //플랜 저장 
-	public ModelAndView save(Plan p) {
-		planS.save(p); //insert & update
+	public ModelAndView save(PlanDTO p) {
+		System.out.println(p);
+//		planS.save(p); //insert & update
 		ModelAndView mav = new ModelAndView(); //save 메소드 실행 후 listPlan으로 일단 리디렉션 설정.
 		mav.setView(new RedirectView("/listPlan")); //향후 해당 user_num에 따른 listPlan만 보여주게 설정할예정!
 		return mav;
