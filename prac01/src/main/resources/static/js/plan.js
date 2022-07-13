@@ -3,6 +3,7 @@ var flowNameId = "";
 var placeLat=0;
 var placeLng=0;
 var positions = [];
+var i=0;
 	
 $(function(){
 	var user_num = $("#userNum").val(); // 실제 구현시 세션에 저장된 user_num 가져오기
@@ -52,12 +53,11 @@ $(function(){
 			}		 		
 		})
 	};
-	
+	a
 	//카카오 맵 마커 생성 function
  	function showMarker(){
 		
 		for (var i = 0; i < positions.length; i++) {
-
 		    //
 		    var imageSrc = '/images/paws.png', // 마커이미지 주소.
 			    imageSize = new kakao.maps.Size(24, 24); // 마커이미지의 크기.
@@ -69,7 +69,7 @@ $(function(){
 		    var marker = new kakao.maps.Marker({
 		        map: map, // 마커를 표시할 지도
 		        position: positions[i].latlng, // 마커를 표시할 위치
-		        //title : positions[i].text, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+		        //title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 		        image : markerImage // 마커 이미지 
 		    });
 		}
@@ -108,27 +108,28 @@ $(function(){
 	$("#placeList > li").on("click", function(){
 		placeName = $(this).text();
 		placeNum = $(this).val();
-		$("#"+flowNameId).attr({value:placeName});
+		$("#"+flowNameId).val(placeName);
 		$("#"+flowNameId).next().val(placeNum);
 		placeLatLng(placeNum);
 	});
 	
 	$("#AddPlan").on("click", function(){
 		
-		var inputFlowNum = $("<div name='plan_flow_num'></div>").attr({
+		console.log("i:"+i);
+		var inputFlowNum = $("<input name='list["+i+"].plan_flow_num' readonly>").attr({
 			id:"flowNum"+flowNumCnt++,
 			class: "form-control flowNum",
 			style: "text-align:center"
-		}).html(flowNum++)
+		}).val(flowNum++)
 		
-		var inputFlowName = $("<input name='plan_flow_name' onclick='selectFlowName(this)'>").attr({
+		var inputFlowName = $("<input name='list["+i+"].plan_flow_name' onclick='selectFlowName(this)'>").attr({
 			id: "flowText"+flowNameCnt++,
 			type: "text",
 			class :"form-control flowText",
 			style: "width: 70%"
 		});
  			
-		var input_num = $("<input name='place.place_num'>").attr({
+		var input_num = $("<input name='list["+i+"].place_num'>").attr({
 			type: "hidden",
 			//현재 선택된 장소의 경도 위도 가져오는 함수 실행.
 		});
@@ -140,12 +141,12 @@ $(function(){
 		});
  			
 		var str = $("<div></div>").attr({
-			name: "plan_name",
 			class: "input-group div mb-1"
 		}).append(inputFlowNum,inputFlowName,input_num,delBtn);
 
- 			
+ 		i++;
 		$("#inputAppend").append(str);
+		
  			
 	})
  		
