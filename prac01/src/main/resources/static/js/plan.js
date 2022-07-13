@@ -42,7 +42,7 @@ $(function(){
 				latlng = new kakao.maps.LatLng(lat, lng);
 				
 				//여러 값 저장을 위해 positions array에 저장.
-				positions.push({title:placeName, placenum:placeNum, latlng : latlng})
+				positions.push({text:placeName, placenum:placeNum, latlng : latlng})
 				
 				//해당위치로 지도 이동 및 마커 표출 
 				map.panTo(latlng);
@@ -59,7 +59,7 @@ $(function(){
 		for (var i = 0; i < positions.length; i++) {
 
 		    //
-		    var imageSrc = '/map/paws.png', // 마커이미지 주소.
+		    var imageSrc = '/images/paws.png', // 마커이미지 주소.
 			    imageSize = new kakao.maps.Size(24, 24); // 마커이미지의 크기.
 			      
 			// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
@@ -69,7 +69,7 @@ $(function(){
 		    var marker = new kakao.maps.Marker({
 		        map: map, // 마커를 표시할 지도
 		        position: positions[i].latlng, // 마커를 표시할 위치
-		        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+		        //title : positions[i].text, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 		        image : markerImage // 마커 이미지 
 		    });
 		}

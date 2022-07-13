@@ -31,7 +31,7 @@
 			<input style="display: none" id="planGrpNum" name="plan_group_num">
 			<select id="planList" name="plan_group_num" class="form-select planGroupOpGrp" aria-label="select-plan-group">
 				<option selected disabled>여행 계획 선택</option>
-				<option th:each="p:${plan_group_list}" th:value="${pl[0]}" th:text="${pl[1]}" class="planGroupOp"></option>
+				<option th:each="p:${plan_group_list}" th:value="${p[0]}" th:text="${p[1]}" class="planGroupOp"></option>
 			</select>
 			
 		<!-- 플랜 그룹 넘버(plan_group_num) : <input type="number" name="plan_group_num" th:value="${groupnum}"><br>
