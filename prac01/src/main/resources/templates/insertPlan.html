@@ -29,7 +29,7 @@
 		<!-- 여행 타이틀 (plan_group_num) -->
 		<div class="input-group grpNum">
 			<input style="display: none" id="planText" type="text" class="form-control planGroupTxt" name="plan_name">
-			<input style="display: none" id="plan_group_num" name="plan_group_num">
+<!--			<input style="display: none" id="plan_group_num" name="plan_group_num">-->
 			<select id="planList" name="plan_group_num" class="form-select planGroupOpGrp" aria-label="select-plan-group">
 				<option selected disabled>여행 계획 선택</option>
 				<option th:each="pl:${plan_list}" th:value="${pl.plan_group_num}" th:text="${pl.plan_name}" class="planGroupOp"></option>

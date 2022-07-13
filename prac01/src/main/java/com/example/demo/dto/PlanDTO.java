@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class PlanDTO {
 	private int plan_group_num;
-	private String plan_group_name;
+	private String plan_name;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date plan_date;
 	ArrayList<RoutDTO> list;

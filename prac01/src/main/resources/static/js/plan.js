@@ -60,7 +60,7 @@ $(function(){
 		for (var i = 0; i < positions.length; i++) {
 		 	
 		    // 마커 이미지의 이미지 크기 입니다
-		    var imageSize = new kakao.maps.Size(24, 35); 
+		    var imageSize = new kakao.maps.Size(24, 24); 
 		    
 		    // 마커 이미지를 생성합니다    
 		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
@@ -97,7 +97,7 @@ $(function(){
 	});
 
 	$("#planList").on("change", function(){
-		var plGrpnum = $("#planList option:selected").val();
+		var plGrpsum = $("#planList option:selected").val();
 		$("#planGrpNum").val("");
 		$("#planText").val("");
 		var text = $("#planList option:selected").text();
@@ -124,7 +124,6 @@ $(function(){
 		var inputFlowName = $("<input name='list["+i+"].plan_flow_name' onclick='selectFlowName(this)'>").attr({
 			id: "flowText"+flowNameCnt++,
 			type: "text",
-			name: "plan_name",
 			class :"form-control flowText",
 			style: "width: 70%"
 		});
