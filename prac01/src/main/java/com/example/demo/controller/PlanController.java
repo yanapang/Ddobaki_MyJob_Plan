@@ -20,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.demo.dto.PlanDTO;
-import com.example.demo.dto.RoutDTO;
+import com.example.demo.dto.RouteDTO;
 import com.example.demo.service.DibsService;
 import com.example.demo.service.PlaceService;
 import com.example.demo.service.PlanService;
@@ -144,7 +144,7 @@ public class PlanController {
 
 	
 	@PostMapping("/savePlan/{user_num}") //플랜 저장 
-	public ModelAndView save(PlanDTO pt, RoutDTO rt, @PathVariable int user_num) {
+	public ModelAndView save(PlanDTO pt, RouteDTO rt, @PathVariable int user_num) {
 		System.out.println(pt);
 		//System.out.println(rt);
 		

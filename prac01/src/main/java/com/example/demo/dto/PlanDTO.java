@@ -16,7 +16,7 @@ public class PlanDTO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date plan_date;
-	ArrayList<RoutDTO> list;
+	ArrayList<RouteDTO> list;
 	
 	
 	//Plan
