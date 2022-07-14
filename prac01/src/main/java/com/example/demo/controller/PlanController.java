@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,7 @@ import com.example.demo.vo.Dibs;
 import com.example.demo.vo.Place;
 import com.example.demo.vo.Plan;
 import com.example.demo.vo.Reservation;
+import com.example.demo.vo.UserInfo;
 
 import lombok.Setter;
 
@@ -144,37 +146,21 @@ public class PlanController {
 
 	
 	@PostMapping("/savePlan/{user_num}") //플랜 저장 
-	public ModelAndView save(PlanDTO pt, RouteDTO rt, @PathVariable int user_num) {
-		System.out.println(pt);
-		//System.out.println(rt);
+	public ModelAndView save(PlanDTO pDTO, RouteDTO rDTO, @PathVariable int user_num) {
+		System.out.println(pDTO);
+
 		
-		Plan p= new Plan();
+		//날짜별동선을 입력받을 리스트 생성 
+		ArrayList<RouteDTO> route_list = pDTO.getList();
 		
-		System.out.println( "세팅 전: " + p+ "\n");
+		int nxtNum = planS.getNextPlanNum();
 		
-		//plan_group_num, plan_name, plan_date
-		p.setPlan_group_num(pt.getPlan_group_num());
-		p.setPlan_name(pt.getPlan_name());
-		p.setPlan_date(pt.getPlan_date());
+		ArrayList<Plan> plan_list = pDTO.toPlan(route_list, nxtNum);
 		
-		System.out.println( "세팅 중간, user_num 전: " + p+ "\n");
 		
-		//p.setUserinfo(user_num);
-		//pt.getList();
-		System.out.println( "for문 전 " + p+ "\n");
-		for (int i=0; i < pt.getList().size(); i++) {
-			System.out.println("List: "+ pt.getList()+"\n");
-			
-			//flow_num, flow_name, place
-			p.setPlace(placeS.getPlace(rt.getPlace_num()));
-			p.setPlan_flow_num(rt.getPlan_flow_num());
-			p.setPlan_flow_name(rt.getPlan_flow_name());
-			p.setPlan_num(planS.getNextPlanNum());
-			
-			System.out.println("Plan Entity : "+ p+"\n");
-			//planS.save(p); //insert & update
+		for (Plan p: plan_list) {
+			planS.save(p);
 		}
-		//System.out.println(p);
 		
 		ModelAndView mav = new ModelAndView(); //save 메소드 실행 후 listPlan으로 일단 리디렉션 설정.
 		mav.setView(new RedirectView("/listPlan")); //향후 해당 user_num에 따른 listPlan만 보여주게 설정할예정!
