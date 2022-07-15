@@ -162,9 +162,9 @@ public class PlanController {
 	
 	
 	//---------------------------- 삭제 --------------------------------
-	@GetMapping("/deleteByPlanNum/{plan_num}")
+	@GetMapping("/deleteByPlanNum")
 	@ResponseBody
-	public void deleteById(@PathVariable int plan_num) {
+	public void deleteById(@RequestParam int plan_num) {
 		planS.deleteById(plan_num);
 		//return "deleteByPlanNum_OK";
 	}
