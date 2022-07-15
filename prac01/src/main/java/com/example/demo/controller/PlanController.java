@@ -147,11 +147,13 @@ public class PlanController {
 		//입력 받은 날짜별 동선 DTO와, pk값을 갖고 Plan 엔티티에 매핑 시킨 후 리스트로 반환받아 저장.
 		ArrayList<Plan> plan_list = pDTO.toPlan(route_list);
 		for(Plan i : plan_list ) {
-			System.out.println(i+"\n");
+			System.out.println("Save에서 받은 Plan객체 : "+i+"\n");
 		}
 		
 		for (Plan p: plan_list) {//반환 받은 플랜 리스트만큼 save 돌기 
-			planS.save(p);
+			if( p.getPlan_num() != 0) {
+				planS.save(p);
+			}
 		}
 		
 		ModelAndView mav = new ModelAndView(); //save 메소드 실행 후 listPlan으로 이동 
