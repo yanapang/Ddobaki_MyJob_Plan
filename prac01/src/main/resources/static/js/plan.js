@@ -198,6 +198,7 @@ $(function() {
 
 					var inputPlanNum = $("<input name='list[" + i + "].plan_num'>").attr({
 						id: "planNum" + planNumCnt++,
+						class: "planNum",
 						type: "hidden",
 						value: plan['plan_num']
 					})
@@ -246,6 +247,14 @@ $(function() {
 
 function del(id) {
 	$(id).parent("div").remove();
+	delPlanNum = $(id).prevAll(".planNum").val();
+	$.ajax({
+		url:"/deleteByPlanNum",
+		data:{plan_num:delPlanNum},
+		success:function(){
+		}
+	})
+	
 	flowNum--;
 }
 
