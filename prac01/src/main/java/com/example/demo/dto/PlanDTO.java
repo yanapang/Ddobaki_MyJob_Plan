@@ -2,9 +2,7 @@ package com.example.demo.dto;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.example.demo.vo.Place;
@@ -19,7 +17,6 @@ public class PlanDTO {
 	
 	//추가 
 	private int user_num;
-	private int plan_num;
 	
 	private int plan_group_num;
 	private String plan_name;
@@ -32,15 +29,15 @@ public class PlanDTO {
 
 	
 	//DTO를 입력받아 Plan으로 반환하는 메소드 
-	public ArrayList<Plan> toPlan(ArrayList<RouteDTO> route_list, int nxtNum ) {
+	public ArrayList<Plan> toPlan(ArrayList<RouteDTO> route_list) {
 		
 		ArrayList<Plan> plan_list = new ArrayList<>();
 		
 		for (RouteDTO r:route_list) {
 			Plan p = new Plan();
-			System.out.println("r: "+ r +'\n');
+			//System.out.println("r: "+ r +'\n');
 			
-			p.setPlan_num(nxtNum++);
+			p.setPlan_num(r.getPlan_num());
 			p.setPlan_group_num(plan_group_num);
 			p.setPlan_name(plan_name);
 			p.setPlan_date(plan_date);
