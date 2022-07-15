@@ -230,7 +230,7 @@ $(function() {
 
 					var str = $("<div></div>").attr({
 						class: "input-group div mb-1"
-					}).append(inputPlanNum,inputFlowNum, inputFlowName, input_num, delBtn);
+					}).append(inputPlanNum, inputFlowNum, inputFlowName, input_num, delBtn);
 
 					i++;
 					$("#inputAppend").append(str);
@@ -243,18 +243,36 @@ $(function() {
 
 	})//end onchange function
 
+	$("#btnDelete").on("click", function() {
+		var planDate = $("#planDate").val();
+		var planGrpNum = $("#planGrpNum").val();
+		console.log(planDate);
+		console.log(planGrpNum);
+		if(planDate != "" && planGrpNum != "") {
+			$.ajax({
+				url: "/deleteByPlanDate",
+				data: { plan_date: planDate, plan_group_num: planGrpNum },
+				success: function() {
+					location.reload();
+				}
+			});
+		}
+	});
+
 })//end 전체 onload function
 
 function del(id) {
 	$(id).parent("div").remove();
 	delPlanNum = $(id).prevAll(".planNum").val();
-	$.ajax({
-		url:"/deleteByPlanNum",
-		data:{plan_num:delPlanNum},
-		success:function(){
-		}
-	})
-	
+	if (delPlanNum != null) {
+		$.ajax({
+			url: "/deleteByPlanNum",
+			data: { plan_num: delPlanNum },
+			success: function() {
+			}
+		})
+	}
+
 	flowNum--;
 }
 

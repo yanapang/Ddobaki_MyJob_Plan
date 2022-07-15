@@ -164,7 +164,7 @@ public class PlanController {
 	
 	
 	//---------------------------- 삭제 --------------------------------
-	@GetMapping("/deleteByPlanNum")
+	@RequestMapping("/deleteByPlanNum")
 	@ResponseBody
 	public void deleteById(@RequestParam int plan_num) {
 		planS.deleteById(plan_num);
@@ -178,9 +178,9 @@ public class PlanController {
 		//return "deleteByPlanNum_OK";
 	}
 	
-	@GetMapping("/deleteByPlanDate/{plan_group_num}/{plan_date}")
+	@GetMapping("/deleteByPlanDate")
 	@ResponseBody
-	public void deleteByPlanDate(@PathVariable int plan_group_num, @DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable Date plan_date) {
+	public void deleteByPlanDate(@RequestParam int plan_group_num, @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam Date plan_date) {
 		planS.deleteByPlanDate(plan_group_num, plan_date);
 	}
 }
