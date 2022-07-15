@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,9 +64,9 @@ public class PlanService {
 	}
 	
 	//------plan group num ---
-//	public List<Object[]> findPlanGroupNum(int user_num){
-//		return plan_dao.findPlanGroupNum(user_num);
-//	}
+	public List<Map<Integer,Object>> findDistinctByUserNum(int user_num){
+		return plan_dao.findDistinctByUserNum(user_num);
+	}
 	
 	//----------- delete ----------
 	//계획 1개 단위 삭제 (기본제공)

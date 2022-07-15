@@ -6,9 +6,8 @@ var positions = [];
 var i=0;
 	
 $(function(){
-	var user_num = $("#userNum").val(); // 실제 구현시 세션에 저장된 user_num 가져오기
-	var plan_num = $("#plannum").val(); //플랜넘버 타임리프로 가져온값 가져옴
-	console.log("plan_num: "+plan_num);
+	var user_num = $("#userNum").val(); // 실제 구현시 세션에 저장된 user_num 가져오기 
+	
 	var flowNumCnt =0;
 	var flowNameCnt =0;
 	var placeNumCnt =0;
@@ -86,11 +85,19 @@ $(function(){
 			url:"/getNextGroupNum",
 			success:function(data){
 				$("#planGrpNum").attr('value',data);
+				console.log("new Group num:"+data);
 			}
 		})
 	});
 	
+	///////-----여기 내일 수정 해야함!!!
+	//-- 새로운 여행 계획 제목 입력 후 버튼 클릭시
+	// 여행 계획(plan_name) 이랑 plan_group_num 매칭해 저장 
 	$("#btnGrpList").on("click", function(){
+		if($("#planText").val!=null && $("#planText").text()!=null){
+			console.log("New Group val :"+ $("#planText").val()); //group title
+			//console.log("New Group text :"+ $("#planText").text()); //nothing 
+		}
 		$("#planList").show();
 		$("#planText").hide();
 		$(this).hide();
@@ -114,7 +121,6 @@ $(function(){
 	});
 	
 	$("#AddPlan").on("click", function(){
-		
 		console.log("i:"+i);
 		var inputFlowNum = $("<input name='list["+i+"].plan_flow_num' readonly>").attr({
 			id:"flowNum"+flowNumCnt++,
@@ -130,8 +136,7 @@ $(function(){
 		});
  			
 		var input_num = $("<input name='list["+i+"].place_num'>").attr({
-			type: "hidden",
-			//현재 선택된 장소의 경도 위도 가져오는 함수 실행.
+			type: "hidden"
 		});
  
 		var delBtn = $("<button onclick='del(this)'>x</button>").attr({
@@ -146,18 +151,72 @@ $(function(){
 
  		i++;
 		$("#inputAppend").append(str);
-		
  			
-	})
+	})//새로운 입력 박스 추가하는 function
  		
- 		
-	//동선입력에 변경이 생기면 새로 번호 부여 및 지도 새로 표시
-	$("#inputAppend").on("change", function(){
-		
-	})
-	
-})
  	
+	//날짜 선택시 ajax를 통해 해당 날짜 계획 불러오기!
+	$("input[name=plan_date]").change(function(){
+		plan_group_num = $("select[name=plan_group_num]").val();
+ 		plan_date = $("input[name=plan_date]").val();
+ 		
+		console.log("date_changed!");
+		$.ajax({
+			url:"/findByAll",
+			data:{user_num:user_num, plan_group_num:plan_group_num, plan_date:plan_date},
+			success:function(data){
+				$("#inputAppend").empty();
+				console.log(data)
+				
+				for(let index in data){
+					
+					let plan = data[index];
+					console.log("i:"+i);
+					console.log("Object.keys(plan):"+Object.keys(plan)+"\n");
+					console.log("plan_flow_num:" + plan['plan_flow_num'])
+					console.log("plan_flow_name:" + plan['plan_flow_name'])
+					var inputFlowNum = $("<input name='list["+i+"].plan_flow_num' readonly>").attr({
+						id:"flowNum"+flowNumCnt++,
+						class: "form-control flowNum",
+						style: "text-align:center"
+					}).val(flowNum++)
+					
+					var inputFlowName = $("<input name='list["+i+"].plan_flow_name' onclick='selectFlowName(this)'>").attr({
+						id: "flowText"+flowNameCnt++,
+						type: "text",
+						class :"form-control flowText",
+						style: "width: 70%",
+						value: plan['plan_flow_name']
+					});
+			 			
+					var input_num = $("<input name='list["+i+"].place_num'>").attr({
+						type: "hidden",
+						value: plan.place['place_num']
+					});
+			 
+					var delBtn = $("<button onclick='del(this)'>x</button>").attr({
+						id:"btnDel"+delBtnCnt++,
+						type:"button",
+						class:"btn btn-dark btnDel"
+					});
+			 			
+					var str = $("<div></div>").attr({
+						class: "input-group div mb-1"
+					}).append(inputFlowNum,inputFlowName,input_num,delBtn);
+			
+			 		i++;
+					$("#inputAppend").append(str);
+					
+				}
+				
+				console.log("OK");
+			}
+		})//end ajax
+	
+	})//end onchange function
+	
+})//end 전체 onload function
+				
 function del(id){
 	 $(id).parent("div").remove();
 	 flowNum--;
