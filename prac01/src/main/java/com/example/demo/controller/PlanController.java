@@ -117,7 +117,7 @@ public class PlanController {
 	
 	//------------------------- 입력 및 수정 --------------------------------
 	
-	@GetMapping("/insertPlan/{user_num}") //플랜 입력창으로 이동
+	@GetMapping("/plan/insertPlan/{user_num}") //플랜 입력창으로 이동
 	public String insert(Model model, @PathVariable int user_num) {
 		//유저번호로 유저 정보 상태유지, 로그인 구현후 session 저장값 사용예정 
 		model.addAttribute("user", userS.getUser(user_num)); 
@@ -137,7 +137,7 @@ public class PlanController {
 	
 	@PostMapping("/savePlan/{user_num}") //플랜 저장 
 	public ModelAndView save(PlanDTO pDTO, RouteDTO rDTO, @PathVariable int user_num) {
-		System.out.println(pDTO);
+		//System.out.println(pDTO);
 		
 		//날짜별동선을 입력받을 리스트 생성 
 		ArrayList<RouteDTO> route_list = pDTO.getList();
@@ -145,7 +145,10 @@ public class PlanController {
 		//새로운 pk 값을 리턴받아 저장하기 위해 getNextNum을 통해 값을 받아오
 		int nxtNum = planS.getNextPlanNum();
 		//입력 받은 날짜별 동선 DTO와, pk값을 갖고 Plan 엔티티에 매핑 시킨 후 리스트로 반환받아 저장.
-		ArrayList<Plan> plan_list = pDTO.toPlan(route_list, nxtNum);
+		ArrayList<Plan> plan_list = pDTO.toPlan(route_list);
+		for(Plan i : plan_list ) {
+			System.out.println(i+"\n");
+		}
 		
 		for (Plan p: plan_list) {//반환 받은 플랜 리스트만큼 save 돌기 
 			planS.save(p);
