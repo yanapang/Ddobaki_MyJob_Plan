@@ -121,12 +121,10 @@ public class PlanController {
 	public String insert(Model model, @PathVariable int user_num) {
 		//유저번호로 유저 정보 상태유지, 로그인 구현후 session 저장값 사용예정 
 		model.addAttribute("user", userS.getUser(user_num)); 
-		//model.addAttribute("newGrpNum", planS.getNextGroupNum());
 		//DB내 모든 장소리스트 
 		model.addAttribute("place_list", placeS.findAll()); 
 		
 		//사용자별 여행계획 리스트 
-		//model.addAttribute("plan_list", planS.findByUserNum(user_num));  
 		model.addAttribute("user_plan_list", planS.findDistinctByUserNum(user_num));
 
 		//사용자별 찜, 예약리스트
