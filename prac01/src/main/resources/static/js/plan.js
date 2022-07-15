@@ -1,4 +1,3 @@
-var flowNum = 1;
 var flowNameId = "";
 var placeLat = 0;
 var placeLng = 0;
@@ -177,15 +176,18 @@ $(function() {
 
 	//날짜 선택시 ajax를 통해 해당 날짜 계획 불러오기!
 	$("input[name=plan_date]").change(function() {
+		flowNum = 1;
 		plan_group_num = $("select[name=plan_group_num]").val();
 		plan_date = $("input[name=plan_date]").val();
 
+		$("#inputAppend").empty();
+		
 		console.log("date_changed!");
 		$.ajax({
 			url: "/findByAll",
 			data: { user_num: user_num, plan_group_num: plan_group_num, plan_date: plan_date },
 			success: function(data) {
-				$("#inputAppend").empty();
+				
 				console.log(data)
 
 				for (let index in data) {
