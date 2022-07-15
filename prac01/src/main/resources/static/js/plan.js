@@ -94,7 +94,7 @@ $(function() {
 		$.ajax({
 			url: "/getNextGroupNum",
 			success: function(data) {
-				$("#planGrpNum").attr('value', data);
+				$("#planGrpNum").val(data);
 				console.log("new Group num:" + data);
 			}
 		})
@@ -115,8 +115,8 @@ $(function() {
 	});
 
 	$("#planList").on("change", function() {
-		var plGrpnum = $("#planList option:selected").val();
-		$("#planGrpNum").val(plGrpnum);
+		var planGrpNum = $("#planList option:selected").val();
+		$("#planGrpNum").val(planGrpNum);
 		$("#planText").val("");
 		var text = $("#planList option:selected").text();
 		$("#planText").val(text);
@@ -181,13 +181,13 @@ $(function() {
 		plan_date = $("input[name=plan_date]").val();
 
 		$("#inputAppend").empty();
-		
+
 		console.log("date_changed!");
 		$.ajax({
 			url: "/findByAll",
 			data: { user_num: user_num, plan_group_num: plan_group_num, plan_date: plan_date },
 			success: function(data) {
-				
+
 				console.log(data)
 
 				for (let index in data) {
@@ -250,7 +250,7 @@ $(function() {
 		var planGrpNum = $("#planGrpNum").val();
 		console.log(planDate);
 		console.log(planGrpNum);
-		if(planDate != "" && planGrpNum != "") {
+		if (planDate != "" && planGrpNum != "") {
 			$.ajax({
 				url: "/deleteByPlanDate",
 				data: { plan_date: planDate, plan_group_num: planGrpNum },
@@ -259,6 +259,20 @@ $(function() {
 				}
 			});
 		}
+	});
+
+	$("#btnGrpDel").on("click", function() {
+		var planGrpNum = $("#planGrpNum").val();
+		if (planGrpNum != "") {
+			$.ajax({
+				url: "/deleteByGroupNum",
+				data: { plan_group_num: planGrpNum },
+				success: function() {
+					location.reload();
+				}
+			})
+		}
+
 	});
 
 })//end 전체 onload function

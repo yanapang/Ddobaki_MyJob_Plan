@@ -171,9 +171,9 @@ public class PlanController {
 		//return "deleteByPlanNum_OK";
 	}
 	
-	@GetMapping("/deleteByGroupNum/{plan_group_num}")
+	@GetMapping("/deleteByGroupNum")
 	@ResponseBody
-	public void deleteByGroupNum(@PathVariable int plan_group_num) {
+	public void deleteByGroupNum(@RequestParam int plan_group_num) {
 		planS.deleteByGroupNum(plan_group_num);
 		//return "deleteByPlanNum_OK";
 	}
