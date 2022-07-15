@@ -156,9 +156,8 @@ public class PlanController {
 			}
 		}
 		
-		ModelAndView mav = new ModelAndView(); //save 메소드 실행 후 listPlan으로 이동 
-		mav.addObject("user_num", user_num);
-		mav.setView(new RedirectView("/findByUserNum")); //향후 해당 user_num에 따른 listPlan만 보여주게 설정할예정!
+		ModelAndView mav = new ModelAndView(); //save 후 다시 insertPlan페이지로 이동!
+		mav.setView(new RedirectView("/plan/insertPlan/"+user_num)); 
 		return mav;
 	}
 	
