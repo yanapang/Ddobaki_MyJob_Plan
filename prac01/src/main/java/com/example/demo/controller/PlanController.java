@@ -145,16 +145,19 @@ public class PlanController {
 		//새로운 pk 값을 리턴받아 저장하기 위해 getNextNum을 통해 값을 받아오
 		int nxtNum = planS.getNextPlanNum();
 		//입력 받은 날짜별 동선 DTO와, pk값을 갖고 Plan 엔티티에 매핑 시킨 후 리스트로 반환받아 저장.
-		ArrayList<Plan> plan_list = pDTO.toPlan(route_list);
-		for(Plan i : plan_list ) {
-			System.out.println("Save에서 받은 Plan객체 : "+i+"\n");
-		}
-		
-		for (Plan p: plan_list) {//반환 받은 플랜 리스트만큼 save 돌기 
-			if( p.getPlan_num() != 0) {
-				planS.save(p);
+		if(route_list != null) {
+			ArrayList<Plan> plan_list = pDTO.toPlan(route_list);
+			for(Plan i : plan_list ) {
+				System.out.println("Save에서 받은 Plan객체 : "+i+"\n");
+			}
+			
+			for (Plan p: plan_list) {//반환 받은 플랜 리스트만큼 save 돌기 
+				if( p.getPlan_num() != 0) {
+					planS.save(p);
+				}
 			}
 		}
+		
 		
 		ModelAndView mav = new ModelAndView(); //save 후 다시 insertPlan페이지로 이동!
 		mav.setView(new RedirectView("/plan/insertPlan/"+user_num)); 
