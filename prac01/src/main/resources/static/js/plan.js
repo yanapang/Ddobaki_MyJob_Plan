@@ -236,6 +236,8 @@ $(function() {
 
 					i++;
 					$("#inputAppend").append(str);
+					
+					placeLatLng(plan.place['place_num'])
 
 				}
 
