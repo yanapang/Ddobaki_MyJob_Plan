@@ -109,11 +109,11 @@ public class PlanController {
 	public int getNextGroupNum() {
 		return planS.getNextGroupNum();
 	}
-//	@GetMapping("/getNextFlowNum/{plan_group_num}/{plan_date}")
-//	@ResponseBody
-//	public int getNextFlowNum(@RequestParam int plan_group_num, @DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable Date plan_date) {
-//		return planS.getNextFlowNum(plan_group_num, plan_date);
-//	}//주소창 요청 방법 ex) => http://localhost:8080/getNextFlowNum/1/2022-07-23
+	@GetMapping("/getNextFlowNum")
+	@ResponseBody
+	public int getNextFlowNum(@RequestParam int plan_group_num, @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam Date plan_date) {
+		return planS.getNextFlowNum(plan_group_num, plan_date);
+	}//주소창 요청 방법 ex) => http://localhost:8080/getNextFlowNum/1/2022-07-23
 	
 	//------------------------- 입력 및 수정 --------------------------------
 	

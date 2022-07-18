@@ -42,7 +42,7 @@ public interface PlanDAO extends JpaRepository<Plan, Integer> {
 	@Query("SELECT p FROM Plan p WHERE plan_date=:plan_date")
 	public List<Plan> findByPlanDate(@Param("plan_date") Date plan_date);
 	
-	@Query("SELECT p FROM Plan p WHERE user_num=:user_num AND plan_group_num=:plan_group_num AND plan_date=:plan_date")
+	@Query("SELECT p FROM Plan p WHERE user_num=:user_num AND plan_group_num=:plan_group_num AND plan_date=:plan_date ORDER BY plan_flow_num")
 	public List<Plan> findByUserNumAndGroupNumAndPlanDate(@Param("user_num") int user_num, @Param("plan_group_num") int plan_group_num, @Param("plan_date") Date plan_date);
 	
 	// -- distinct, order by 적용한 그룹 넘버 리스트 

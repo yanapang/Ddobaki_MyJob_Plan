@@ -14,6 +14,7 @@ $(function() {
 	var group_num;
 	var planNumCnt = 0;
 	var nxtPlanNum = 0;
+	var nxtFlowNum = 0;
 
 	//map 생성 
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -59,6 +60,17 @@ $(function() {
 			url: "/getNextPlanNum",
 			success: function(data) {
 				nxtPlanNum = data;
+			}
+		})
+	}
+	
+	function getNextFlowNum(planGrpNum, planDate){
+		$.ajax({
+			url:"/getNextFlowNum",
+			data:{plan_group_num:planGrpNum, plan_date:planDate},
+			success: function(data){
+				console.log(data);
+				nxtFlowNum = data;
 			}
 		})
 	}
@@ -145,7 +157,8 @@ $(function() {
 			id: "flowNum" + flowNumCnt++,
 			class: "form-control flowNum",
 			style: "text-align:center"
-		}).val(flowNum++)
+		}).val(nxtFlowNum++);
+		console.log("nextFlowNum:"+nxtFlowNum);
 
 		var inputFlowName = $("<input name='list[" + i + "].plan_flow_name' onclick='selectFlowName(this)'>").attr({
 			id: "flowText" + flowNameCnt++,
@@ -179,7 +192,9 @@ $(function() {
 		flowNum = 1;
 		plan_group_num = $("input[name=plan_group_num]").val();
 		plan_date = $("input[name=plan_date]").val();
-
+		
+		getNextFlowNum(plan_group_num, plan_date);
+		
 		$("#inputAppend").empty();
 
 		console.log("date_changed!");
@@ -208,8 +223,9 @@ $(function() {
 					var inputFlowNum = $("<input name='list[" + i + "].plan_flow_num' readonly>").attr({
 						id: "flowNum" + flowNumCnt++,
 						class: "form-control flowNum",
-						style: "text-align:center"
-					}).val(flowNum++)
+						style: "text-align:center",
+						value: plan['plan_flow_num']
+					})
 
 					var inputFlowName = $("<input name='list[" + i + "].plan_flow_name' onclick='selectFlowName(this)'>").attr({
 						id: "flowText" + flowNameCnt++,
@@ -290,8 +306,11 @@ function del(id) {
 			}
 		})
 	}
-
-	flowNum--;
+	$(".flowNum").each(function(index) { // 중간 동선 삭제 시 flowNum 재 설정
+    	var idx = index + 1;
+    	$(this).val(idx);
+    	flowNum = idx +1;
+	})
 }
 
 function selectFlowName(name) {
