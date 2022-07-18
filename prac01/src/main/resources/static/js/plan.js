@@ -20,7 +20,7 @@ $(function() {
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = {
 			center: new kakao.maps.LatLng(37.556317, 126.922713), // 지도의 중심좌표
-			level: 3 // 지도의 확대 레벨
+			level: 7 // 지도의 확대 레벨 1~14. 숫자가 클수록 zoom out
 		};
 
 	//지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
@@ -183,85 +183,16 @@ $(function() {
 
 		i++;
 		$("#inputAppend").append(str);
+		
 
 	})//새로운 입력 박스 추가하는 function
 
 
 	//날짜 선택시 ajax를 통해 해당 날짜 계획 불러오기!
-	$("input[name=plan_date]").change(function() {
-		flowNum = 1;
-		plan_group_num = $("input[name=plan_group_num]").val();
-		plan_date = $("input[name=plan_date]").val();
-		
-		getNextFlowNum(plan_group_num, plan_date);
-		
-		$("#inputAppend").empty();
-
-		console.log("date_changed!");
-		$.ajax({
-			url: "/findByAll",
-			data: { user_num: user_num, plan_group_num: plan_group_num, plan_date: plan_date },
-			success: function(data) {
-
-				console.log(data)
-
-				for (let index in data) {
-
-					let plan = data[index];
-					console.log("i:" + i);
-					console.log("Object.keys(plan):" + Object.keys(plan) + "\n");
-					console.log("plan_flow_num:" + plan['plan_flow_num'])
-					console.log("plan_flow_name:" + plan['plan_flow_name'])
-
-					var inputPlanNum = $("<input name='list[" + i + "].plan_num'>").attr({
-						id: "planNum" + planNumCnt++,
-						class: "planNum",
-						type: "hidden",
-						value: plan['plan_num']
-					})
-
-					var inputFlowNum = $("<input name='list[" + i + "].plan_flow_num' readonly>").attr({
-						id: "flowNum" + flowNumCnt++,
-						class: "form-control flowNum",
-						style: "text-align:center",
-						value: plan['plan_flow_num']
-					})
-
-					var inputFlowName = $("<input name='list[" + i + "].plan_flow_name' onclick='selectFlowName(this)'>").attr({
-						id: "flowText" + flowNameCnt++,
-						type: "text",
-						class: "form-control flowText",
-						style: "width: 70%",
-						value: plan['plan_flow_name']
-					});
-
-					var input_num = $("<input name='list[" + i + "].place_num'>").attr({
-						type: "hidden",
-						value: plan.place['place_num']
-					});
-
-					var delBtn = $("<button onclick='del(this)'>x</button>").attr({
-						id: "btnDel" + delBtnCnt++,
-						type: "button",
-						class: "btn btn-dark btnDel"
-					});
-
-					var str = $("<div></div>").attr({
-						class: "input-group div mb-1"
-					}).append(inputPlanNum, inputFlowNum, inputFlowName, input_num, delBtn);
-
-					i++;
-					$("#inputAppend").append(str);
-					
-					placeLatLng(plan.place['place_num'])
-
-				}
-
-				console.log("OK");
-			}
-		})//end ajax
-
+	$("input[name=plan_date]").on("change", function(){
+		reloadMarker();
 	})//end onchange function
+	
 
 	$("#btnDelete").on("click", function() {
 		var planDate = $("#planDate").val();
@@ -273,7 +204,8 @@ $(function() {
 				url: "/deleteByPlanDate",
 				data: { plan_date: planDate, plan_group_num: planGrpNum },
 				success: function() {
-					location.reload();
+					//location.reload();
+					console.log("deletePlanOK");
 				}
 			});
 		}
@@ -287,24 +219,103 @@ $(function() {
 				data: { plan_group_num: planGrpNum },
 				success: function() {
 					location.reload();
+					console.log("groupDelOK");
 				}
 			})
 		}
 
 	});
+	
+	function reloadMarker(){
+		flowNum = 1;
+		plan_group_num = $("input[name=plan_group_num]").val();
+		plan_date = $("input[name=plan_date]").val();
+
+		//새로 날짜 선택시
+		$("#inputAppend").empty();
+
+		console.log("date_changed!");
+		$.ajax({
+			url: "/findByAll",
+			data: { user_num: user_num, plan_group_num: plan_group_num, plan_date: plan_date },
+			success: function(data){
+				console.log(data)
+
+				for (let index in data) {
+		
+					let plan = data[index];
+					console.log("i:" + i);
+					console.log("Object.keys(plan):" + Object.keys(plan) + "\n");
+					console.log("plan_flow_num:" + plan['plan_flow_num'])
+					console.log("plan_flow_name:" + plan['plan_flow_name'])
+		
+					var inputPlanNum = $("<input name='list[" + i + "].plan_num'>").attr({
+						id: "planNum" + planNumCnt++,
+						class: "planNum",
+						type: "hidden",
+						value: plan['plan_num']
+					})
+		
+					var inputFlowNum = $("<input name='list[" + i + "].plan_flow_num' readonly>").attr({
+						id: "flowNum" + flowNumCnt++,
+						class: "form-control flowNum",
+						style: "text-align:center"
+					}).val(flowNum++)
+		
+					var inputFlowName = $("<input name='list[" + i + "].plan_flow_name' onclick='selectFlowName(this)'>").attr({
+						id: "flowText" + flowNameCnt++,
+						type: "text",
+						class: "form-control flowText",
+						style: "width: 70%",
+						value: plan['plan_flow_name']
+					});
+
+					var input_num = $("<input name='list[" + i + "].place_num'>").attr({
+						type: "hidden",
+						value: plan.place['place_num']
+					});
+		
+					var delBtn = $("<button onclick='del(this)'>x</button>").attr({
+						id: "btnDel" + delBtnCnt++,
+						type: "button",
+						class: "btn btn-dark btnDel"
+					});
+		
+					var str = $("<div></div>").attr({
+						class: "input-group div mb-1"
+					}).append(inputPlanNum, inputFlowNum, inputFlowName, input_num, delBtn);
+		
+					i++;
+					$("#inputAppend").append(str);
+					
+					//불러온 동선에 대한 마커 표시
+					placeLatLng(plan.place['place_num'])
+		
+			}
+
+		console.log("OK");
+		}
+	})//end ajax
+		
+		
+}
 
 })//end 전체 onload function
 
 function del(id) {
 	$(id).parent("div").remove();
+	console.log("delete plan flow")
 	delPlanNum = $(id).prevAll(".planNum").val();
+	console.log(delPlanNum);
 	if (delPlanNum != null) {
 		$.ajax({
 			url: "/deleteByPlanNum",
 			data: { plan_num: delPlanNum },
 			success: function() {
+				reloadMarker();
 			}
 		})
+		
 	}
 	$(".flowNum").each(function(index) { // 중간 동선 삭제 시 flowNum 재 설정
     	var idx = index + 1;
@@ -317,3 +328,5 @@ function selectFlowName(name) {
 	flowNameId = name.id;
 	console.log(name.id);
 }
+
+
