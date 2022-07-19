@@ -57,20 +57,20 @@
 	     		<button type="button" id="AddPlan" class="btn btn-success col-2">동선추가</button>
    				<div class="btnPlaceListAll btn-group">
 	     			<div class="btn_place_list">
-					<button id="btnPlace" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">장소 선택</button>
+					<button id="btnPlace" class="btn btn-success btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">장소 선택</button>
 						<ul id="placeList" class="dropdown-menu dropdown">
 							<li  id="placeListOp" class="dropdown-item" th:each="p:${place_list}" th:value="${p.place_num}" th:text="${p.place_name}">
 							</li>
 						</ul>
 					</div>
 					<div class="btn_dibs_list">
-					<button id="btnDibs" class="btn btn-secondary btn-sm dropdown-toggle display:flex" type="button" data-bs-toggle="dropdown" aria-expanded="false">찜 리스트</button>
+					<button id="btnDibs" class="btn btn-success btn-sm dropdown-toggle display:flex" type="button" data-bs-toggle="dropdown" aria-expanded="false">찜 리스트</button>
 						<ul id="dibsList" class="dropdown-menu btnDibs dropdown">
 							<li id="dibsListOp" class="dropdown-item" th:each="d:${dibs}" th:text="${d.place.place_name}" th:value="${d.place.place_num}"></li>
 						</ul>
 					</div>
 					<div class="btn_rsv_list">
-					<button id="btnRsv" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">예약 리스트</button>
+					<button id="btnRsv" class="btn btn-success btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">예약 리스트</button>
 						<ul id="rsvList" class="dropdown-menu dropdown">
 							<li id="rsvListOp" class="dropdown-item" th:each="r:${reservation}" th:text="${r.place.place_name}" th:value="${r.place.place_num}" ></li>
 						</ul>
