@@ -226,7 +226,7 @@ $(function() {
 					var inputFlowNum = $("<input name='list[" + i + "].plan_flow_num' readonly>").attr({
 						id: "flowNum" + flowNumCnt++,
 						class: "form-control flowNum",
-						style: "text-align:center",
+						style: "text-align:center; background:rgba(121,189,143,1);",
 						value: plan['plan_flow_num']
 					})
 
