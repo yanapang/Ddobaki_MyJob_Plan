@@ -159,7 +159,7 @@ $(function() {
 		var inputFlowNum = $("<input name='list[" + i + "].plan_flow_num' readonly>").attr({
 			id: "flowNum" + flowNumCnt++,
 			class: "form-control flowNum",
-			style: "text-align:center"
+			style: "text-align:center; background:rgba(121,189,143,1);"
 		}).val(nxtFlowNum++);
 		console.log("nextFlowNum:"+nxtFlowNum);
 
@@ -177,7 +177,7 @@ $(function() {
 		var delBtn = $("<button onclick='del(this)'>x</button>").attr({
 			id: "btnDel" + delBtnCnt++,
 			type: "button",
-			class: "btn btn-dark btnDel"
+			class: "btn btn-danger btnDel"
 		});
 
 		var str = $("<div></div>").attr({
@@ -246,7 +246,7 @@ $(function() {
 					var delBtn = $("<button onclick='del(this)'>x</button>").attr({
 						id: "btnDel" + delBtnCnt++,
 						type: "button",
-						class: "btn btn-dark btnDel"
+						class: "btn btn-danger btnDel"
 					});
 
 					var str = $("<div></div>").attr({
