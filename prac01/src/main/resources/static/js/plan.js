@@ -50,7 +50,7 @@ $(function() {
 				map.panTo(latlng);
 				showMarker(latlng);
 
-				console.log(latlng);
+				console.log(positions);
 			}
 		})
 	};
@@ -93,6 +93,9 @@ $(function() {
 				//title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 				image: markerImage // 마커 이미지 
 			});
+			
+			markers.push(marker)
+			console.log("markers:"+markers)
 		}
 	}
 
@@ -307,10 +310,12 @@ function del(id) {
 		})
 	}
 	$(".flowNum").each(function(index) { // 중간 동선 삭제 시 flowNum 재 설정
-    	var idx = index + 1;
+    	var idx = index + 1;	
     	$(this).val(idx);
     	flowNum = idx +1;
 	})
+	
+	console.log($("#inputAppend > input").val())
 }
 
 function selectFlowName(name) {

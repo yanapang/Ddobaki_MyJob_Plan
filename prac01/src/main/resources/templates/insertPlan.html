@@ -22,6 +22,7 @@
 <th:block th:replace="fragments/header :: headerFragment"></th:block>
 	
 <!--<h3>PLAN</h3><hr>-->
+<section>
 <div class="container border">
     <form th:action="@{/savePlan}+${'/'+user_num}" method="post">
      <div class="form-inline">
@@ -98,7 +99,7 @@
   	 </div><!-- bottom 박스 끝 -->
 	</form>
 </div> <!-- 전체 컨테이너 끝-->
-
+</section>
 <!-- footer fragment 사용 -->
 <th:block th:replace="fragments/footer :: footerFragment"></th:block>
 

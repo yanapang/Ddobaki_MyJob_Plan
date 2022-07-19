@@ -1,8 +1,15 @@
 @charset "UTF-8";
 
 /* main */
+/* main */
+section{
+	padding: 10px 40px 20px 40px; /* 위 오른쪽 아래 왼쪽 순서 */
+	background-color: #9be17b;
+}
 .container{
+	width: 98vw;
 	border-radius: 10px;
+	background-color:#79BE8F;
 }
 
 #map {
@@ -19,6 +26,7 @@
 .input_box{
 	height: 60vh;
 	overflow: auto;
+	background-color:#FFFFFF;
 }
 .date, .input_box, .btnAll {
 	padding:1.5%;
