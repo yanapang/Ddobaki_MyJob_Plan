@@ -38,9 +38,9 @@
 		<!-- 플랜 그룹 넘버(plan_group_num) : <input type="number" name="plan_group_num" th:value="${groupnum}"><br>
 			플랜 그룹 이름(plan_name) : <input type="text" name="plan_name" th:value="${plan_name}"><br> -->
 			<div class="input-group-addon input-group-button">
-				<button type="button" id="btnGrpAdd" class="btn btn-dark">새그룹추가</button>
-				<button style="display: none" type="button" id="btnGrpList" class="btn btn-dark">리스트보이기</button>
-				<button type="button" id="btnGrpDel" class="btn btn-dark">삭제</button>
+				<button type="button" id="btnGrpAdd" class="btn btn-success">새그룹추가</button>
+				<button style="display: none" type="button" id="btnGrpList" class="btn btn-success">리스트보이기</button>
+				<button type="button" id="btnGrpDel" class="btn btn-danger">삭제</button>
 			</div>
 		</div>
 	</div> 
@@ -54,7 +54,7 @@
 	     	<!-- 여행 날짜(plan_date) -->
    			<div class="row justify-content-center date input-group-addon input-group-button">
 	     		<input type="date" id="planDate" name="plan_date" th:value="${plan_date}" class="col-5">
-	     		<button type="button" id="AddPlan" class="btn btn-dark col-2">동선추가</button>
+	     		<button type="button" id="AddPlan" class="btn btn-success col-2">동선추가</button>
    				<div class="btnPlaceListAll btn-group">
 	     			<div class="btn_place_list">
 					<button id="btnPlace" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">장소 선택</button>
@@ -91,9 +91,9 @@
 		
 	   <!-- 입력, 수정, 삭제 버튼위치 -->
 	 	<div class="d-flex justify-content-end btnAll"  aria-label="save, delete button">
-		  <button id="btnSubmit" type="submit" class="btn btn-dark">수정/저장</button>
-		  <button type="reset" class="btn btn-dark"> 리셋</button>
-		  <button id="btnDelete" type="button" class="btn btn-dark">삭제</button>
+		  <button id="btnSubmit" type="submit" class="btn btn-success">수정/저장</button>
+		  <button type="reset" class="btn btn-secondary"> 리셋</button>
+		  <button id="btnDelete" type="button" class="btn btn-danger">삭제</button>
 		</div>		
  	 </div><!-- 오른쪽 박스 끝 -->
   	 </div><!-- bottom 박스 끝 -->
