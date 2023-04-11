@@ -115,7 +115,6 @@ $(function() {
 		})
 	});
 
-	///////-----여기 내일 수정 해야함!!!
 	//-- 새로운 여행 계획 제목 입력 후 버튼 클릭시
 	// 여행 계획(plan_name) 이랑 plan_group_num 매칭해 저장 
 	$("#btnGrpList").on("click", function() {
